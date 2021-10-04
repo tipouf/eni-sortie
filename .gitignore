@@ -4,6 +4,7 @@
 /.idea/
 /.idea
 /.env
+/node_modules/
 /.env.local
 /.env.local.php
 /.env.*.local

@@ -50,11 +50,6 @@ class Trip
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=ContributorTrip::class, mappedBy="trips")
-     */
-    private $contributorTrips;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="trips")
      */
     private $promoter;
@@ -74,9 +69,16 @@ class Trip
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Contributor::class, inversedBy="trips")
+     * @ORM\JoinTable(name="ContributorTrip")
+     */
+    private $contributors;
+
     public function __construct()
     {
         $this->contributorTrips = new ArrayCollection();
+        $this->contributors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,36 +158,6 @@ class Trip
         return $this;
     }
 
-    /**
-     * @return Collection|ContributorTrip[]
-     */
-    public function getContributorTrips(): Collection
-    {
-        return $this->contributorTrips;
-    }
-
-    public function addContributorTrip(ContributorTrip $contributorTrip): self
-    {
-        if (!$this->contributorTrips->contains($contributorTrip)) {
-            $this->contributorTrips[] = $contributorTrip;
-            $contributorTrip->setTrips($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContributorTrip(ContributorTrip $contributorTrip): self
-    {
-        if ($this->contributorTrips->removeElement($contributorTrip)) {
-            // set the owning side to null (unless already changed)
-            if ($contributorTrip->getTrips() === $this) {
-                $contributorTrip->setTrips(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPromoter(): ?Campus
     {
         return $this->promoter;
@@ -230,6 +202,30 @@ class Trip
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Contributor[]
+     */
+    public function getContributors(): Collection
+    {
+        return $this->contributors;
+    }
+
+    public function addContributor(Contributor $contributor): self
+    {
+        if (!$this->contributors->contains($contributor)) {
+            $this->contributors[] = $contributor;
+        }
+
+        return $this;
+    }
+
+    public function removeContributor(Contributor $contributor): self
+    {
+        $this->contributors->removeElement($contributor);
 
         return $this;
     }

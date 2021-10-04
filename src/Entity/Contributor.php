@@ -62,17 +62,18 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=ContributorTrip::class, mappedBy="contributors")
-     */
-    private $contributorTrips;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="contributors")
      */
     private $campus;
 
     /**
      * @ORM\OneToMany(targetEntity=Trip::class, mappedBy="promoterContributor")
+     */
+    private $promotorTrips;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Trip::class, mappedBy="contributors")
+     * @ORM\JoinTable(name="ContributorTrip")
      */
     private $trips;
 
@@ -235,36 +236,6 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection|ContributorTrip[]
-     */
-    public function getContributorTrips(): Collection
-    {
-        return $this->contributorTrips;
-    }
-
-    public function addContributorTrip(ContributorTrip $contributorTrip): self
-    {
-        if (!$this->contributorTrips->contains($contributorTrip)) {
-            $this->contributorTrips[] = $contributorTrip;
-            $contributorTrip->setContributors($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContributorTrip(ContributorTrip $contributorTrip): self
-    {
-        if ($this->contributorTrips->removeElement($contributorTrip)) {
-            // set the owning side to null (unless already changed)
-            if ($contributorTrip->getContributors() === $this) {
-                $contributorTrip->setContributors(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCampus(): ?Campus
     {
         return $this->campus;
@@ -282,22 +253,36 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getTrips(): Collection
     {
-        return $this->trips;
+        return $this->promotorTrips;
+    }
+
+    public function removeTrips(Trip $trip): self
+    {
+        if ($this->trips->contains($trip)) {
+            $this->trips->removeElement($trip);
+            // set the owning side to null (unless already changed)
+            if ($trip->getPromoter() === $this) {
+                $trip->setPromoter(null);
+            }
+        }
+
+        return $this;
     }
 
     public function addTrip(Trip $trip): self
     {
-        if (!$this->trips->contains($trip)) {
-            $this->trips[] = $trip;
+        if (!$this->promotorTrips->contains($trip)) {
+            $this->promotorTrips[] = $trip;
             $trip->setPromoterContributor($this);
         }
 
         return $this;
     }
 
+
     public function removeTrip(Trip $trip): self
     {
-        if ($this->trips->removeElement($trip)) {
+        if ($this->promotorTrips->removeElement($trip)) {
             // set the owning side to null (unless already changed)
             if ($trip->getPromoterContributor() === $this) {
                 $trip->setPromoterContributor(null);

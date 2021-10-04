@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Routing\Annotation\Route;
+
 /**
  * @Route("/trips", name="app_trips")
  */
