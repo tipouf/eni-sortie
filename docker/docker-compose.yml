@@ -3,7 +3,7 @@ services:
   php:
     build: ./php-fpm
     volumes:
-      - ./../../:/var/www/msmv
+      - ./../:/var/www/eni
       - ./php-fpm/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - db
@@ -12,14 +12,14 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./../../:/var/www/msmv
+      - ./../:/var/www/eni
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
   db:
     image: postgres:10-alpine
     environment:
-      POSTGRES_DB: mydungeon
+      POSTGRES_DB: enisortie
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: test
     ports:
