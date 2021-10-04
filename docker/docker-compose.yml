@@ -1,0 +1,27 @@
+version: '2'
+services:
+  php:
+    build: ./php-fpm
+    volumes:
+      - ./../../:/var/www/msmv
+      - ./php-fpm/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./../../:/var/www/msmv
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+  db:
+    image: postgres:10-alpine
+    environment:
+      POSTGRES_DB: mydungeon
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+    ports:
+    - "5432:5432"
+
