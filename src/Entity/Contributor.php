@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContributorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -58,6 +60,27 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ContributorTrip::class, mappedBy="contributors")
+     */
+    private $contributorTrips;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="contributors")
+     */
+    private $campus;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Trip::class, mappedBy="promoterContributor")
+     */
+    private $trips;
+
+    public function __construct()
+    {
+        $this->contributorTrips = new ArrayCollection();
+        $this->trips = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -210,5 +233,77 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|ContributorTrip[]
+     */
+    public function getContributorTrips(): Collection
+    {
+        return $this->contributorTrips;
+    }
+
+    public function addContributorTrip(ContributorTrip $contributorTrip): self
+    {
+        if (!$this->contributorTrips->contains($contributorTrip)) {
+            $this->contributorTrips[] = $contributorTrip;
+            $contributorTrip->setContributors($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContributorTrip(ContributorTrip $contributorTrip): self
+    {
+        if ($this->contributorTrips->removeElement($contributorTrip)) {
+            // set the owning side to null (unless already changed)
+            if ($contributorTrip->getContributors() === $this) {
+                $contributorTrip->setContributors(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trip[]
+     */
+    public function getTrips(): Collection
+    {
+        return $this->trips;
+    }
+
+    public function addTrip(Trip $trip): self
+    {
+        if (!$this->trips->contains($trip)) {
+            $this->trips[] = $trip;
+            $trip->setPromoterContributor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Trip $trip): self
+    {
+        if ($this->trips->removeElement($trip)) {
+            // set the owning side to null (unless already changed)
+            if ($trip->getPromoterContributor() === $this) {
+                $trip->setPromoterContributor(null);
+            }
+        }
+
+        return $this;
     }
 }
