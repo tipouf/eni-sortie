@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Form\CityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\CityRepository;
 
 
 /**
@@ -15,17 +17,31 @@ class CityController extends AbstractController
   /**
    * @Route("/", name="main_cities", methods={"GET"})
    */
-  public function main():Response
+  public function main(CityRepository $cityRepository):Response
   {
-    return $this->render('city/cities.html.twig');
+    return $this->render('city/cities.html.twig', [
+      'cities' => $cityRepository->findAll(),
+    ]);
   }
 
   /**
-   * @Route("/edit/{city}", name="edit_city", methods={"POST"})
+   * @Route("/edit/{city}", name="edit_city", methods={"GET","POST"})
    */
   public function editCity():Response
   {
-    return $this->render('city/edit_city.html.twig');
+    $form = $this->createForm(CityType::class, $city);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $this->getDoctrine()->getManager()->flush();
+
+      return $this->redirectToRoute('city_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    return $this->renderForm('city/edit_city.html.twig', [
+      'city' => $city,
+      'form' => $form,
+    ]);
   }
 
   /**
