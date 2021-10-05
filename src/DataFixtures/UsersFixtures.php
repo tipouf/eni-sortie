@@ -19,10 +19,9 @@ class UsersFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
-        $contributor = $this->createContributor();
+        // $contributor = $this->createContributor();
         $contributorAdmin = $this->createContributor();
         $contributorAdmin->setRoles(['ROLE_ADMIN']);
-        $manager->persist($contributor);
         $manager->persist($contributorAdmin);
         $manager->flush();
     }
