@@ -4,6 +4,8 @@
 /.idea/
 /.idea
 /.env
+/.composer.json
+/.composer.lock
 /node_modules/
 /.env.local
 /.env.local.php
