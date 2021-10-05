@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Entity\Campus;
 use App\Repository\CampusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,5 +17,29 @@ class CampusService
     {
         $this->campusRepository = $campusRepository;
         $this->em = $em;
+    }
+
+    public function createCampus(string $name)
+    {
+        if ($this->campusRepository->findOneBy(["name" => $name]))
+            return;
+        $campus = new Campus();
+        $campus->setName($name);
+        $this->em->persist($campus);
+        $this->em->flush();
+    }
+
+    public function addCampus(Campus $campus)
+    {
+        if ($this->campusRepository->findOneBy(["name" => $campus->getName()]))
+            return;
+        $this->em->persist($campus);
+        $this->em->flush();
+    }
+
+    public function removeCampus(Campus $campus)
+    {
+        $this->em->remove($campus);
+        $this->em->flush();
     }
 }
