@@ -4,18 +4,14 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ path('app_home') }}">Acceuil</a></li>
-            <li><a href="{{ path('main_cities') }}">Villes</a></li>
-            <li><a href="">Campus</a></li>
             <li><a href="{{ path('app_login') }}">Connexion</a></li>
-            <li><a href="{{ path('contributor_profil', {'contributor': contributor.id}) }}">Profil</a></li>
+
         </ul>
     </div>
 </nav>
 
 <ul class="sidenav blue-grey darken-4" id="mobile-demo">
     <li><a href="{{ path('app_home') }}">Acceuil</a></li>
-    <li><a href="{{ path('main_cities') }}">Villes</a></li>
-    <li><a href="">Campus</a></li>
     <li><a href="{{ path('app_login') }}">Connexion</a></li>
-    <li><a href="{{ path('contributor_profil', {'contributor': contributor.id}) }}">Profil</a></li>
+
 </ul>
