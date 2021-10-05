@@ -4,42 +4,40 @@
 
 {% block body %}
 
-
-    <div class="container row">
-        <h1>Liste des villes</h1>
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <table class="table">
-                        <thead>
+<div class="container row align">
+    <div class=" card light-blue darken-4 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
+        <card class="card-content">
+            <div class="col m8 offset-m2">
+                <h1 class="white-text">Liste des villes</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Ville</th>
+                        <th>Code Postal</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for city in cities %}
                         <tr>
-                            <th>Ville</th>
-                            <th>Code Postal</th>
-                            <th>actions</th>
+                            <td>{{ city.name }}</td>
+                            <td>{{ city.postalCode }}</td>
+                            <td>
+                                <a class="btn" href="{{ path('edit_city', {'city': city.id}) }}">Editer</a>
+                                <a class="btn" href="{{ path('delete_city', {'city': city.id}) }}">Enlever</a>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for city in cities %}
-                            <tr>
-                                <td>{{ city.name }}</td>
-                                <td>{{ city.postalCode }}</td>
-                                <td>
-                                    <a class="btn" href="{{ path('edit_city', {'city': city.id}) }}">Editer</a>
-                                    <a class="btn" href="{{ path('delete_city', {'city': city.id}) }}">Enlever</a>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="4">no records found</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 </br>
-                    <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('add_city') }}">+</a>
-                </div>
+                <a class="btn-floating btn-large waves-effect waves-light red" href="{{ path('add_city') }}">+</a>
             </div>
     </div>
 
-
     </br>
-{% endblock %}
+    {% endblock %}
