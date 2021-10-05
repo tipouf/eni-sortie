@@ -47,4 +47,14 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByStatusName(string $status)
+    {
+        return $this->createQueryBuilder('t')
+            ->addSelect('s')
+            ->leftJoin('t.status', 's')
+            ->where('s.label = :val')
+            ->setParameter('val', $status)
+            ->getQuery()
+            ->getResult();
+    }
 }

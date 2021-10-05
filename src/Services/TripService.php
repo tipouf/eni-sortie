@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Entity\Status;
 use App\Entity\Trip;
 use App\Repository\StatusRepository;
 use App\Repository\TripRepository;
@@ -13,6 +14,7 @@ class TripService
 {
     private TripRepository $tripRepository;
     private EntityManagerInterface $em;
+    private StatusRepository $statusRepository;
 
     public function __construct(EntityManagerInterface $em, TripRepository $tripRepository, StatusRepository $statusRepository)
     {
@@ -21,19 +23,20 @@ class TripService
         $this->em = $em;
     }
 
-    public function createTrip()
+    public function createTrip($data)
     {
+        if (is_string($data["status"]))
+            $data["status"] = $this->statusRepository->findOneBy(["label" => $data["status"]]);
         $trip = new Trip();
-        $trip->setName();
-        $trip->setStatus();
-        $trip->setPromoter();
-        $trip->setLocation();
-        $trip->setDuration();
-        $trip->setDescription();
-        $trip->setStartedAt();
-        $trip->setPromoterContributor();
-        $trip->setRegistrationLimit();
-        $trip->setRegistrationNumber();
+        $trip->setName($data["name"]);
+        $trip->setStatus($data["status"]);
+        $trip->setPromoter($data["campus"]);
+        $trip->setLocation($data["location"]);
+        $trip->setDuration($data["duration"]);
+        $trip->setDescription($data["description"]);
+        $trip->setStartedAt($data["startedAt"]);
+        $trip->setRegistrationLimit($data["registrationLimit"]);
+        $trip->setRegistrationNumber(0);
 
         $this->em->persist($trip);
         $this->em->flush();
@@ -55,9 +58,14 @@ class TripService
         return $this->tripRepository->findAll();
     }
 
-    public function getTripsByStatus()
+    public function getTripsByStatus(Status $status): array
     {
+        return $this->tripRepository->findBy(["status" => $status]);
+    }
 
+    public function getTripsByStatusName(string $status)
+    {
+        return $this->tripRepository->findByStatusName($status);
     }
 
     public function changeStatus(Trip $trip, string $status)
