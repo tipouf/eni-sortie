@@ -17,7 +17,7 @@
     </head>
     <body>
         <header>
-            {% if app.user %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 {% include 'bar/navbar_auth.html.twig' %}
             {% else %}
                 {% include 'bar/navbar.html.twig' %}
