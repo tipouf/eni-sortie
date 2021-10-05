@@ -37,7 +37,9 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
         }
-        $this->render('trip/new_trip.html.twig');
+        return $this->render('trip/new_trip.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**

@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,9 +23,13 @@ class CreateTripType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('startedAt', DateTimeType::class)
-            ->add('duration', NumberType::class)
-            ->add('registrationLimit', NumberType::class)
+            ->add('startedAt', TextType::class, [
+                "attr" => array(
+                    "class" => "datepicker"
+                )
+            ])
+            ->add('duration', IntegerType::class)
+            ->add('registrationLimit', IntegerType::class)
             ->add('description', TextareaType::class)
             ->add('promoter', EntityType::class, [
                 'class' => Campus::class,
