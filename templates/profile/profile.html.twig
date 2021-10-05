@@ -1,1 +1,50 @@
-{
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container row">
+        <h1>Profil de {{ contributor.firstname }}</h1>
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ contributor.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ contributor.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Firstname</th>
+                        <td>{{ contributor.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lastname</th>
+                        <td>{{ contributor.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{ contributor.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Enable</th>
+                        <td>{{ contributor.enable ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Roles</th>
+                        <td>{{ contributor.roles ? contributor.roles|json_encode : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>{{ contributor.password }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
