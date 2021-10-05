@@ -22,6 +22,9 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 2592000
             logout:
                 path: app_logout
                 # where to redirect after logout
