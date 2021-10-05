@@ -19,6 +19,16 @@ class CampusService
         $this->em = $em;
     }
 
+    public function getCampusByName(string $name): ?Campus
+    {
+        return $this->campusRepository->findOneBy(["name" => $name]);
+    }
+
+    public function getAllCampus(): array
+    {
+        return $this->campusRepository->findAll();
+    }
+
     public function createCampus(string $name)
     {
         if ($this->campusRepository->findOneBy(["name" => $name]))

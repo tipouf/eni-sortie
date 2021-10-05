@@ -21,6 +21,45 @@ class TripService
         $this->em = $em;
     }
 
+    public function createTrip()
+    {
+        $trip = new Trip();
+        $trip->setName();
+        $trip->setStatus();
+        $trip->setPromoter();
+        $trip->setLocation();
+        $trip->setDuration();
+        $trip->setDescription();
+        $trip->setStartedAt();
+        $trip->setPromoterContributor();
+        $trip->setRegistrationLimit();
+        $trip->setRegistrationNumber();
+
+        $this->em->persist($trip);
+        $this->em->flush();
+    }
+
+    public function addTrip(Trip $trip)
+    {
+        $this->em->persist($trip);
+        $this->em->flush();
+    }
+
+    public function getTripsByDate(\DateTime $dateTime): array
+    {
+        return $this->tripRepository->findBy(["startedAt" => $dateTime]);
+    }
+
+    public function getAllTrips(): array
+    {
+        return $this->tripRepository->findAll();
+    }
+
+    public function getTripsByStatus()
+    {
+
+    }
+
     public function changeStatus(Trip $trip, string $status)
     {
         $status = $this->statusRepository->findOneBy(["label" => $status]);

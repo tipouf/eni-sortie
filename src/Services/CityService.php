@@ -19,6 +19,21 @@ class CityService
         $this->em = $em;
     }
 
+    public function getAllCities(): array
+    {
+        return $this->cityRepository->findAll();
+    }
+
+    public function getCityByName(string $name): ?City
+    {
+        return $this->cityRepository->findOneBy(["name" => $name]);
+    }
+
+    public function getCitiesByPostalCode (string $postalCode): array
+    {
+        return $this->cityRepository->findBy(["postalCode" => $postalCode]);
+    }
+
     public function createCity(string $name, string $postalCode)
     {
         $city = new City();
