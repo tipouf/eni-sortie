@@ -20,15 +20,14 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $contributor = new Contributor();
-        $contributor->setFirstname();
-        $contributor->setLastname();
-        $contributor->setEmail();
-        $contributor->setPhone();
-        $contributor->setPhone();
-        $contributor->setPassword();
+        $contributor->setFirstname("kevin");
+        $contributor->setLastname("huet");
+        $contributor->setEmail("kevin.huet2020@campus-eni.fr");
+        $contributor->setPhone("0707070707");
         $contributor->setPassword($this->hasher->hashPassword($contributor, "test"));
-        $contributor->setRoles();
-
+        $contributor->setRoles(['ROLE_ADMIN']);
+        $contributor->setEnable(true);
+        $manager->persist($contributor);
         $manager->flush();
     }
 }
