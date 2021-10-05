@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\TripService;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -9,6 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TripController
 {
+    private TripService $tripService;
+
+    public function __construct(TripService $tripService)
+    {
+        $this->tripService = $tripService;
+    }
+
     /**
      * @Route("/", name="app_showTrips")
      */
