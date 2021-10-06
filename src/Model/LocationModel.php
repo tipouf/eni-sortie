@@ -21,16 +21,11 @@ class LocationModel
     private $longitude;
 
     /**
-     * @var $city
-     */
-    private $city;
-
-    /**
      * LocationModel constructor.
-     * @param string $name
-     * @param string $street
-     * @param float $latitude
-     * @param float $longitude
+     * @param string|null $name
+     * @param string|null $street
+     * @param float|null $latitude
+     * @param float|null $longitude
      */
     public function __construct(string $name = null, string $street = null, float $latitude = null, float $longitude = null)
     {
@@ -102,21 +97,5 @@ class LocationModel
     public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city): void
-    {
-        $this->city = $city;
     }
 }
