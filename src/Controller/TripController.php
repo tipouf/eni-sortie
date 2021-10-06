@@ -27,6 +27,11 @@ class TripController extends AbstractController
      */
     public function showTrips()
     {
+        $trips = $this->tripService->getAllTrips();
+        //liste des sorties
+        return $this->render('trip/trips_list.html.twig',[
+            'trips' => $trips
+        ]);
     }
 
     /**
@@ -39,6 +44,7 @@ class TripController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripService->createTrip($model);
+            return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()
