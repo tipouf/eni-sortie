@@ -40,7 +40,7 @@ class ProfileController extends AbstractController
 
       $this->getDoctrine()->getManager()->flush();
 
-      return $this->redirectToRoute(('profile/profile.html.twig'), [
+      return $this->redirectToRoute('contributor_profil', [
         'contributor' => $contributor->getId(),
       ]);
     };
