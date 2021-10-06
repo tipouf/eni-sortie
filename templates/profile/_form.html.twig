@@ -1,5 +1,8 @@
 {{ form_start(form) }}
 <div class="col m3">
+    {{ form_row(form.pseudo) }}
+</div>
+<div class="col m3">
     {{ form_row(form.email) }}
 </div>
 <div class="col m3">
@@ -9,13 +12,19 @@
     {{ form_row(form.lastname) }}
 </div>
 <div class="col m3">
+    {{ form_row(form.password.first) }}
+</div>
+<div class="col m3">
+    {{ form_row(form.password.second) }}
+</div>
+<div class="col m3">
     {{ form_row(form.phone) }}
 </div>
 <div class="col m3">
-    {{ form_row(form.password) }}
-</div>
-<div class="col m6">
     {{ form_row(form.campus) }}
+</div>
+<div class="col m3">
+    {{ form_row(form.enable) }}
 </div>
 
 <div class="col s12">

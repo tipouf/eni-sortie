@@ -4,15 +4,20 @@
 
 {% block body %}
     <div class="container">
-        <div class="card light-blue darken-4" style="margin-top: 4em; padding-top: 2em">
+        <div class="card light-blue darken-4" >
             <div class="card-content row">
-                <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="default">
+                <div>
+                    {% if contributor.pseudo %}
+                        <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="default">
+                    {% else %}
+                        <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="user-pciture">
+                    {% endif %}
+                </div>
                 <h2 class="white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h2>
                 <table class="table">
                     <tbody>
                     <tr>
                         <th>Pseudo</th>
-                        {{ contributor.enable ? 'Oui' : 'Non' }}
                         <td>{{ contributor.pseudo ?  contributor.pseudo : 'Pas de pseudo'}}</td>
                     </tr>
                     <tr>
