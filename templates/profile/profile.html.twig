@@ -11,6 +11,11 @@
                 <table class="table">
                     <tbody>
                     <tr>
+                        <th>Pseudo</th>
+                        {{ contributor.enable ? 'Oui' : 'Non' }}
+                        <td>{{ contributor.pseudo ?  contributor.pseudo : 'Pas de pseudo'}}</td>
+                    </tr>
+                    <tr>
                         <th>Email</th>
                         <td>{{ contributor.email }}</td>
                     </tr>
