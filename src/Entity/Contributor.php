@@ -26,6 +26,12 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $email;
 
+  /**
+   * @ORM\Column(type="string", length=180)
+   * @var string
+   */
+  private $pseudo;
+
     /**
      * @ORM\Column(type="string", length=180)
      * @var string
@@ -110,13 +116,29 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->email;
     }
 
-    /**
+  /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
     public function getUsername(): string
     {
         return (string) $this->email;
     }
+
+  /**
+   * @return string
+   */
+  public function getPseudo(): string
+  {
+    return $this->pseudo;
+  }
+
+  /**
+   * @param string $pseudo
+   */
+  public function setPseudo(string $pseudo): void
+  {
+    $this->pseudo = $pseudo;
+  }
 
     /**
      * @return string
