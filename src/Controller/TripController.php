@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Form\CreateTripType;
+use App\Model\TripModel;
 use App\Services\TripService;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,10 +34,11 @@ class TripController extends AbstractController
      */
     public function addTrip(Request $request)
     {
-        $form = $this->createForm(CreateTripType::class);
+        $model = new TripModel();
+        $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $this->tripService->createTrip($model);
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()
