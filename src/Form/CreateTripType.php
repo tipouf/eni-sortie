@@ -24,6 +24,7 @@ class CreateTripType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        //$cityId = $builder->getData()->
         $builder
             ->add('name', TextType::class)
             ->add('startedAt', TextType::class, [
@@ -61,10 +62,21 @@ class CreateTripType extends AbstractType
                 },
                 'choice_label' => 'name',
             ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'required' => false
+            ])
             ->add('location', EntityType::class, [
                 'class' => Location::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
+                        ->where('u.city = :city')
+                        ->setParameter()
                         ->orderBy('u.name', 'ASC');
                 },
                 'choice_label' => 'name',
@@ -76,15 +88,7 @@ class CreateTripType extends AbstractType
                 ],
                 'required' => false
             ])
-            ->add('locationType', LocationType::class)
-
-            ->add('city', EntityType::class, [
-                'class' => City::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.name', 'ASC');
-                },
-                'choice_label' => 'name',
+            ->add('locationType', LocationType::class, [
                 'required' => false
             ])
         ;

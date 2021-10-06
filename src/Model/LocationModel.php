@@ -21,6 +21,11 @@ class LocationModel
     private $longitude;
 
     /**
+     * @var $city
+     */
+    private $city;
+
+    /**
      * LocationModel constructor.
      * @param string $name
      * @param string $street
@@ -99,5 +104,19 @@ class LocationModel
         $this->longitude = $longitude;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
 }

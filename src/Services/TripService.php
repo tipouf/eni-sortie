@@ -42,8 +42,6 @@ class TripService
         } else {
             $location = $model->getLocation();
             $location->setCity($model->getCity());
-            $location->getCity()->addLocation($location);
-            $this->em->persist($location->getCity());
         }
         $dateRegistration = \DateTime::createFromFormat("d/m/Y H:i",
             $model->getRegistrationLimit()." ".$model->getRegistrationLimitTime());
@@ -63,7 +61,7 @@ class TripService
 
         $this->em->persist($location);
         $location->addTrip($trip);
-        $this->em->persist($location);
+        $this->em->persist($trip);
 
         $this->em->flush();
     }
