@@ -17,7 +17,7 @@
                     {{ form_row(form.startedAtTime) }}
                 </div>
                 <div class="col m6">
-                    {{ form_row(form.location) }}
+                    {{ form_row(form.city) }}
                 </div>
 
                 <div class="col m3">
@@ -26,6 +26,11 @@
                 <div class="col m3">
                     {{ form_row(form.registrationLimitTime) }}
                 </div>
+
+                <div class="col m6">
+                    {{ form_row(form.location) }}
+                </div>
+
                 <div class="col m6">
                     {{ form_row(form.registrationNumber) }}
                 </div>
@@ -35,13 +40,13 @@
                 <div class="col m6">
                     {{ form_row(form.description) }}
                 </div>
-                <div>
+                <div class="col s6">
                     <label>
                         {{ form_widget(form.newLocation) }}
                         <span>Ajouter</span>
                     </label>
                 </div>
-                <div>
+                <div class="col s6 offset-s6">
                     <label>
                         {{ form_widget(form.locationType) }}
                     </label>
@@ -62,13 +67,13 @@
             $('.timepicker').timepicker({
                 twelveHour: false
             });
-
+            $('#create_trip_locationType').parent().attr('hidden', true)
             $('#create_trip_newLocation').click(function () {
                 if ($(this).prop('checked')) {
                     console.log('checked')
-                    $('#create_trip_locationType').parent().attr('hidden', true)
-                } else {
                     $('#create_trip_locationType').parent().attr('hidden', false)
+                } else {
+                    $('#create_trip_locationType').parent().attr('hidden', true)
                 }
             })
         });

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Campus;
+use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Trip;
 use App\Model\TripModel;
@@ -76,6 +77,16 @@ class CreateTripType extends AbstractType
                 'required' => false
             ])
             ->add('locationType', LocationType::class)
+
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.name', 'ASC');
+                },
+                'choice_label' => 'name',
+                'required' => false
+            ])
         ;
     }
 

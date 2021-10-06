@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Status
 {
+    const OPEN = "Ouverte";
+    const CLOSED = "Clôturée";
+    const CREATED = "Créée";
+    const IN_PROGRESS ="Activité en cours";
+    const PASSED = "Passée";
+    const CANCELED = "Annulée";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

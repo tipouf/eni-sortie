@@ -49,10 +49,24 @@ class Location
      */
     private $city;
 
-    public function __construct()
+    /**
+     * Location constructor.
+     * @param $name
+     * @param $street
+     * @param $latitude
+     * @param $longitude
+     * @param $city
+     */
+    public function __construct($name = null, $street = null, $latitude = null, $longitude = null, $city = null)
     {
         $this->trips = new ArrayCollection();
+        $this->name = $name;
+        $this->street = $street;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->city = $city;
     }
+
 
     public function getId(): ?int
     {

@@ -4,21 +4,26 @@
 namespace App\Services;
 
 
+use App\Entity\Location;
 use App\Entity\Status;
 use App\Entity\Trip;
 use App\Model\TripModel;
 use App\Repository\StatusRepository;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class TripService
 {
     private TripRepository $tripRepository;
     private EntityManagerInterface $em;
     private StatusRepository $statusRepository;
+    private Security $security;
 
-    public function __construct(EntityManagerInterface $em, TripRepository $tripRepository, StatusRepository $statusRepository)
+    public function __construct(EntityManagerInterface $em, TripRepository $tripRepository, StatusRepository $statusRepository,
+        Security $security)
     {
+        $this->security = $security;
         $this->statusRepository = $statusRepository;
         $this->tripRepository = $tripRepository;
         $this->em = $em;
@@ -26,8 +31,41 @@ class TripService
 
     public function createTrip(TripModel $model)
     {
-    //    $this->em->persist($trip);
-      //  $this->em->flush();
+        if ($model->isNewLocation()) {
+            $location = new Location($model->getLocationType()->getName(),
+                $model->getLocationType()->getStreet(),
+                $model->getLocationType()->getLatitude(),
+                $model->getLocationType()->getLongitude(),
+                $model->getCity());
+            $location->getCity()->addLocation($location);
+            $this->em->persist($location->getCity());
+        } else {
+            $location = $model->getLocation();
+            $location->setCity($model->getCity());
+            $location->getCity()->addLocation($location);
+            $this->em->persist($location->getCity());
+        }
+        $dateRegistration = \DateTime::createFromFormat("d/m/Y H:i",
+            $model->getRegistrationLimit()." ".$model->getRegistrationLimitTime());
+        $dateStarted = \DateTime::createFromFormat("d/m/Y H:i",
+            $model->getStartedAt()." ".$model->getStartedAtTime());
+        $trip = new Trip();
+        $trip->setName($model->getName());
+        $trip->setRegistrationNumber($model->getRegistrationNumber());
+        $trip->setPromoterContributor($this->security->getUser());
+        $trip->setPromoter($model->getPromoter());
+        $trip->setRegistrationLimit($dateRegistration);
+        $trip->setStartedAt($dateStarted);
+        $trip->setLocation($location);
+        $trip->setDescription($model->getDescription());
+        $trip->setDuration($model->getDuration());
+        $this->changeStatus($trip, Status::CREATED);
+
+        $this->em->persist($location);
+        $location->addTrip($trip);
+        $this->em->persist($location);
+
+        $this->em->flush();
     }
 
     public function addTrip(Trip $trip)
