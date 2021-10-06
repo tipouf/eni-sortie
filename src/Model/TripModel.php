@@ -5,6 +5,7 @@ namespace App\Model;
 
 
 use App\Entity\Campus;
+use App\Entity\City;
 use App\Entity\Location;
 use DateTime;
 
@@ -16,22 +17,22 @@ class TripModel
     private $name;
 
     /**
-     * @var DateTime
+     * @var string
      */
     private $startedAt;
 
     /**
-     * @var int
+     * @var string
      */
     private $startedAtTime;
 
     /**
-     * @var DateTime
+     * @var string
      */
     private $registrationLimit;
 
     /**
-     * @var int
+     * @var string
      */
     private $registrationLimitTime;
 
@@ -71,6 +72,11 @@ class TripModel
     private $locationType;
 
     /**
+     * @var City
+     */
+    private $city;
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -87,9 +93,9 @@ class TripModel
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getStartedAt(): ?DateTime
+    public function getStartedAt(): ?string
     {
         return $this->startedAt;
     }
@@ -99,29 +105,29 @@ class TripModel
      */
     public function setStartedAt(string $startedAt): void
     {
-        $this->startedAt = DateTime::createFromFormat("J-M-Y", $startedAt);
+        $this->startedAt = $startedAt;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getStartedAtTime(): int
+    public function getStartedAtTime(): ?string
     {
         return $this->startedAtTime;
     }
 
     /**
-     * @param int $startedAtTime
+     * @param string $startedAtTime
      */
     public function setStartedAtTime(string $startedAtTime): void
     {
-        $this->startedAtTime = strtotime($startedAtTime);
+        $this->startedAtTime = $startedAtTime;
     }
 
     /**
-     * @return DateTime
+     * @return string|null
      */
-    public function getRegistrationLimit(): ?DateTime
+    public function getRegistrationLimit(): ?string
     {
         return $this->registrationLimit;
     }
@@ -131,23 +137,23 @@ class TripModel
      */
     public function setRegistrationLimit(string $registrationLimit): void
     {
-        $this->registrationLimit = DateTime::createFromFormat("J-M-Y", $registrationLimit);
+        $this->registrationLimit = $registrationLimit;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRegistrationLimitTime(): int
+    public function getRegistrationLimitTime(): string
     {
         return $this->registrationLimitTime;
     }
 
     /**
-     * @param int $registrationLimitTime
+     * @param string $registrationLimitTime
      */
     public function setRegistrationLimitTime(string $registrationLimitTime): void
     {
-        $this->registrationLimitTime = strtotime($registrationLimitTime);
+        $this->registrationLimitTime = $registrationLimitTime;
     }
 
     /**
@@ -262,5 +268,19 @@ class TripModel
         $this->locationType = $locationType;
     }
 
+    /**
+     * @return City
+     */
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
 
+    /**
+     * @param City $city
+     */
+    public function setCity(City $city): void
+    {
+        $this->city = $city;
+    }
 }
