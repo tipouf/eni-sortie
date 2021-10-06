@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {#
+        <select class="form-control" id="campus">
+            {% for trip in trips %}
+                <option value = {{ trip.promoter.name}}
+            {% endfor %}
+        </select>
+    #}
+
+    <div class="container row align">
+    <div class=" card light-blue darken-4 col s12" style="padding: 0em 0 3em 0">
+        <card class="card-content">
+            <div class="col m9 offset-m0">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nom de la sortie</th>
+                        <th>Date de la sortie</th>
+                        <th>Clôture</th>
+                        <th>Inscrits/place</th>
+                        <th>Etat</th>
+                        <th>Inscrit</th>
+                        <th>Organisateur</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for trip in trips %}
+                        <tr>
+                            <td>{{ trip.name }}</td>
+                            <td>{{ trip.startedAt|date('d/m/Y H:i') }}</td>
+                            <td>{{ trip.registrationLimit|date('d/m/Y')}}</td>
+                            <td>/{{ trip.registrationNumber}}</td>
+                            <td>{{ trip.status.label}}</td>
+                            <td></td>
+                            <td>{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}</td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+{% endblock %}
