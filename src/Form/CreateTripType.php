@@ -26,35 +26,46 @@ class CreateTripType extends AbstractType
     {
         //$cityId = $builder->getData()->
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Nom de la sortie',
+            ])
             ->add('startedAt', TextType::class, [
+                'label' => 'Commence le',
                 "attr" => [
                     "class" => "datepicker"
                 ]
             ])
             ->add('startedAtTime', TextType::class, [
+                'label' => 'à',
                 "attr" => [
                     "class" => "timepicker"
                 ]
             ])
-            ->add('duration', IntegerType::class)
+            ->add('duration', IntegerType::class, [
+                'label' => 'Durée (en min.)',
+            ])
             ->add('registrationLimit',TextType::class, [
+                'label' => "Date limite d'inscription le",
                 "attr" => [
                     "class" => "datepicker"
                 ]
             ])
             ->add('registrationLimitTime', TextType::class, [
+                'label' => 'à',
                 "attr" => [
                     "class" => "timepicker"
                 ]
             ])
-            ->add('registrationNumber', IntegerType::class)
+            ->add('registrationNumber', IntegerType::class, [
+                'label' => 'Nombre de place max.',
+            ])
             ->add('description', TextareaType::class, [
                 "attr" => [
                     "class" => "materialize-textarea"
                 ]
             ])
             ->add('promoter', EntityType::class, [
+                'label' => 'Campus',
                 'class' => Campus::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -63,6 +74,7 @@ class CreateTripType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('city', EntityType::class, [
+                'label' => 'Ville',
                 'class' => City::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
@@ -72,13 +84,15 @@ class CreateTripType extends AbstractType
                 'required' => false
             ])
             ->add('location', EntityType::class, [
+                'label' => 'Lieu',
                 'class' => Location::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->where('u.city = :city')
-                        ->setParameter()
                         ->orderBy('u.name', 'ASC');
                 },
+                'attr' => [
+                    'disabled' => true
+                ],
                 'choice_label' => 'name',
                 'required' => false
             ])
