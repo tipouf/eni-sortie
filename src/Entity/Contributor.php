@@ -27,7 +27,7 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
   /**
-   * @ORM\Column(type="string", length=180)
+   * @ORM\Column(type="string", length=180, nullable=true)
    * @var string
    */
   private $pseudo;
@@ -127,7 +127,7 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
   /**
    * @return string
    */
-  public function getPseudo(): string
+  public function getPseudo(): ?string
   {
     return $this->pseudo;
   }
