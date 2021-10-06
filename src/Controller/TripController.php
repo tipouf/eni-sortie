@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Trip;
 use App\Form\CreateTripType;
 use App\Model\TripModel;
 use App\Services\TripService;
@@ -39,6 +40,7 @@ class TripController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripService->createTrip($model);
+            return $this->redirectToRoute('app_home');
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()
@@ -67,10 +69,20 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/edit", name="app_editTrip")
+     * @Route("/{trip}/edit", name="app_editTrip")
      */
-    public function editTrip()
+    public function editTrip(Trip $trip, Request $request)
     {
+        $model = new TripModel();
+        $form = $this->createForm(CreateTripType::class, $model);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->tripService->editTrip($model);
+        }
+        return $this->render('trip/edit_trip.html.twig', [
+            'form' => $form->createView(),
+            'trip' => $trip
+        ]);
     }
 
 }

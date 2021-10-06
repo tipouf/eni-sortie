@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/error_l
 /migrations/
 /.idea/
 /.idea

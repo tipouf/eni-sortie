@@ -30,7 +30,7 @@ class City
     private $postalCode;
 
     /**
-     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="city")
+     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="city", cascade={"persist"})
      */
     private $locations;
 
