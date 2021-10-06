@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="card" style="margin-top: 4em; padding-top: 2em">
+            <div class="card-content row">
+            {{ form_start(form) }}
+                <div class="col m6">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.promoter) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.startedAt) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.startedAtTime) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.location) }}
+                </div>
+
+                <div class="col m3">
+                    {{ form_row(form.registrationLimit) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.registrationLimitTime) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.registrationNumber) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.duration) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.description) }}
+                </div>
+                <div>
+                    <label>
+                        {{ form_widget(form.newLocation) }}
+                        <span>Ajouter</span>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        {{ form_widget(form.locationType) }}
+                    </label>
+                </div>
+                <div class="col s12">
+                    <button class="btn" type="submit">Valider</button>
+                </div>
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('select').formSelect();
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            });
+            $('.timepicker').timepicker({
+                twelveHour: false
+            });
+
+            $('#create_trip_newLocation').click(function () {
+                if ($(this).prop('checked')) {
+                    console.log('checked')
+                    $('#create_trip_locationType').parent().attr('hidden', true)
+                } else {
+                    $('#create_trip_locationType').parent().attr('hidden', false)
+                }
+            })
+        });
+    </script>
+{% endblock %}

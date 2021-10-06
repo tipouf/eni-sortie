@@ -18,6 +18,6 @@ RUN apk update \
 
 CMD ["php-fpm", "-F"]
 
-WORKDIR /var/www/msmv
+WORKDIR /var/www/eni
 
 EXPOSE 9000

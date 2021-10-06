@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Entity\Status;
 use App\Entity\Trip;
+use App\Model\TripModel;
 use App\Repository\StatusRepository;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,23 +24,10 @@ class TripService
         $this->em = $em;
     }
 
-    public function createTrip($data)
+    public function createTrip(TripModel $model)
     {
-        if (is_string($data["status"]))
-            $data["status"] = $this->statusRepository->findOneBy(["label" => $data["status"]]);
-        $trip = new Trip();
-        $trip->setName($data["name"]);
-        $trip->setStatus($data["status"]);
-        $trip->setPromoter($data["campus"]);
-        $trip->setLocation($data["location"]);
-        $trip->setDuration($data["duration"]);
-        $trip->setDescription($data["description"]);
-        $trip->setStartedAt($data["startedAt"]);
-        $trip->setRegistrationLimit($data["registrationLimit"]);
-        $trip->setRegistrationNumber(0);
-
-        $this->em->persist($trip);
-        $this->em->flush();
+    //    $this->em->persist($trip);
+      //  $this->em->flush();
     }
 
     public function addTrip(Trip $trip)

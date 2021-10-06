@@ -34,8 +34,10 @@ class City
      */
     private $locations;
 
-    public function __construct()
+    public function __construct(string $name = null, string $postalCode = null)
     {
+        $this->name = $name;
+        $this->postalCode = $postalCode;
         $this->locations = new ArrayCollection();
     }
 

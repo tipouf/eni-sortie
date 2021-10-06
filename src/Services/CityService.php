@@ -29,6 +29,11 @@ class CityService
         return $this->cityRepository->findOneBy(["name" => $name]);
     }
 
+    public function getCityByNameAndCode(string $name, string $postalCode): ?City
+    {
+        return $this->cityRepository->findOneBy(["name" => $name, "postalCode" => $postalCode]);
+    }
+
     public function getCitiesByPostalCode (string $postalCode): array
     {
         return $this->cityRepository->findBy(["postalCode" => $postalCode]);
@@ -54,4 +59,5 @@ class CityService
         $this->em->remove($city);
         $this->em->flush();
     }
+
 }
