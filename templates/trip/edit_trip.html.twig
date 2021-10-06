@@ -43,14 +43,15 @@
                 </div>
                 <div class="col s6">
                     <label>
-                        {{ form_widget(form.newLocation) }}
+                        {{ form_widget(form.newLocation, { attr: { checked: (trip.location) ? true : false } }) }}
                         <span>Ajouter un nouveau lieu</span>
                     </label>
                 </div>
-                <div class="col s6 offset-s6">
-                    <label>
-                        {{ form_widget(form.locationType) }}
-                    </label>
+                <div id="new_location" class="col s6 offset-s6">
+                    {{ form_row(form.locationType.name, { attr: { value: trip.location.name } }) }}
+                    {{ form_row(form.locationType.street, { attr: { value: trip.location.street } }) }}
+                    {{ form_row(form.locationType.latitude, { attr: { value: trip.location.latitude } }) }}
+                    {{ form_row(form.locationType.longitude, { attr: { value: trip.location.longitude } }) }}
                 </div>
                 <div class="col s12">
                     <button class="btn" type="submit">Valider</button>
@@ -67,13 +68,16 @@
             $('.timepicker').timepicker({
                 twelveHour: false
             });
-            $('#create_trip_locationType').parent().attr('hidden', true)
+            if ($('#create_trip_newLocation').prop('checked'))
+                $('#new_location').attr('hidden', false)
+            else
+                $('#new_location').attr('hidden', true)
             $('#create_trip_newLocation').click(function () {
                 if ($(this).prop('checked')) {
                     console.log('checked')
-                    $('#create_trip_locationType').parent().attr('hidden', false)
+                    $('#new_location').attr('hidden', false)
                 } else {
-                    $('#create_trip_locationType').parent().attr('hidden', true)
+                    $('#new_location').attr('hidden', true)
                 }
             })
         });
