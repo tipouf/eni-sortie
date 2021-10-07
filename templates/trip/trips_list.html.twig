@@ -1,13 +1,43 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    {#
-        <select class="form-control" id="campus">
-            {% for trip in trips %}
-                <option value = {{ trip.promoter.name}}
-            {% endfor %}
-        </select>
-    #}
+    <div class="container">
+        <div class="card-content row" >
+            {{ form_start(form) }}
+            <div class="col m2">
+                {{ form_row(form.campus) }}
+            </div>
+            <div class="col m2">
+                {{ form_row(form.tripname) }}
+            </div>
+            <div class="col m1">
+                {{ form_row(form.datestart) }}
+            </div>
+            <div class="col m1" >
+                {{ form_row(form.dateend) }}
+            </div>
+                <label>
+                    {{ form_widget(form.trippromoter) }}
+                    <span>Sortie dont je suis l'organisateur/trice</span>
+                </label>
+                <label>
+                    {{ form_widget(form.tripregistered) }}
+                    <span>Sortie auxquelles je suis inscrit/e</span>
+                </label>
+                <label>
+                    {{ form_widget(form.tripnotregistered) }}
+                    <span>Sortie auxquelles je ne suis pas inscrit/e</span>
+                </label>
+                <label>
+                    {{ form_widget(form.triplimit) }}
+                    <span>Sorties passées</span>
+                </label>
+                {{ form_end(form) }}
+                <button class = "btn">
+                    Rechercher
+                </button>
+        </div>
+    </div>
 
     <div class="container row align">
     <div class=" card light-blue darken-4 col s12" style="padding: 0em 0 3em 0">
@@ -35,7 +65,7 @@
                             <td>/{{ trip.registrationNumber}}</td>
                             <td>{{ trip.status.label}}</td>
                             <td></td>
-                            <td>{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}</td>
+                           <td>{#{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}#}</td>
                             <td></td>
                         </tr>
                     {% else %}
