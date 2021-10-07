@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="card" style="margin-top: 4em;">
+            <div class="card-content row">
+                <h5 style="margin-bottom: 2em" class="h3 font-weight-normal">Editer la sortie : {{ trip.name }}</h5>
+                {{ form_start(form) }}
+                <div class="col m6">
+                    {{ form_row(form.name, { attr: { value: trip.name } }) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.promoter, { attr: { value: trip.promoter.id } }) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.startedAt, { attr: { value: trip.startedAt|date('d/m/Y') } }) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.startedAtTime, { attr: { value: trip.startedAt|date('H:i') } }) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.city, { attr: { value: trip.location.city.name } }) }}
+                </div>
+
+                <div class="col m3">
+                    {{ form_row(form.registrationLimit, { attr: { value: trip.registrationLimit|date('d/m/Y') } }) }}
+                </div>
+                <div class="col m3">
+                    {{ form_row(form.registrationLimitTime, { attr: { value: trip.registrationLimit|date('H:i') } }) }}
+                </div>
+
+                <div class="col m6">
+                    {{ form_row(form.location) }}
+                </div>
+
+                <div class="col m6">
+                    {{ form_row(form.registrationNumber, { attr: { value: trip.registrationNumber } }) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.duration, { attr: { value: trip.registrationNumber } }) }}
+                </div>
+                <div class="col m6">
+                    {{ form_row(form.description, { attr: { value: trip.description } }) }}
+                </div>
+                <div class="col s6">
+                    <label>
+                        {{ form_widget(form.newLocation, { attr: { checked: (trip.location) ? true : false } }) }}
+                        <span>Ajouter un nouveau lieu</span>
+                    </label>
+                </div>
+                <div id="new_location" class="col s6 offset-s6">
+                    {{ form_row(form.locationType.name, { attr: { value: trip.location.name } }) }}
+                    {{ form_row(form.locationType.street, { attr: { value: trip.location.street } }) }}
+                    {{ form_row(form.locationType.latitude, { attr: { value: trip.location.latitude } }) }}
+                    {{ form_row(form.locationType.longitude, { attr: { value: trip.location.longitude } }) }}
+                </div>
+                <div class="col s12">
+                    <button class="btn" type="submit">Valider</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            });
+            $('.timepicker').timepicker({
+                twelveHour: false
+            });
+            if ($('#create_trip_newLocation').prop('checked'))
+                $('#new_location').attr('hidden', false)
+            else
+                $('#new_location').attr('hidden', true)
+            $('#create_trip_newLocation').click(function () {
+                if ($(this).prop('checked')) {
+                    console.log('checked')
+                    $('#new_location').attr('hidden', false)
+                } else {
+                    $('#new_location').attr('hidden', true)
+                }
+            })
+        });
+    </script>
+{% endblock %}

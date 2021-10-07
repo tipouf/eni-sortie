@@ -77,7 +77,6 @@ class Trip
 
     public function __construct()
     {
-        $this->contributorTrips = new ArrayCollection();
         $this->contributors = new ArrayCollection();
     }
 
