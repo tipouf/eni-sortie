@@ -10,6 +10,7 @@ use App\Services\TripService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -71,10 +72,13 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/show", name="app_showTrip")
+     * @Route("/{trip}", name="app_showTrip", methods={"GET"})
      */
-    public function showTrip()
+      public function showTrip(Trip $trip): Response
     {
+      return $this->render('trip/show_trip.html.twig', [
+        'trip' => $trip,
+      ]);
     }
 
     /**

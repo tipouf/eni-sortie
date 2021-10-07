@@ -330,7 +330,7 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return string
      */
-    public function getProfilePictureName(): string
+    public function getProfilePictureName(): ?string
     {
         return $this->profilePictureName;
     }
