@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Contributor;
 use App\Form\EditContributorType;
-use App\Repository\ContributorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +28,7 @@ class ProfileController extends AbstractController
   /**
    * @Route("/{contributor}/edit", name="contributor_edit", methods={"GET", "POST"})
    */
-  public function edit(Request $request, Contributor $contributor,  UserPasswordHasherInterface $hasher): Response
+  public function edit(Request $request, Contributor $contributor, UserPasswordHasherInterface $hasher): Response
   {
     $form = $this->createForm(EditContributorType::class, $contributor);
     $form->handleRequest($request);

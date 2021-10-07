@@ -37,12 +37,12 @@
                         <td>{{ contributor.phone }}</td>
                     </tr>
                     <tr>
-                        <th>Activé</th>
-                        <td>{{ contributor.enable ? 'Oui' : 'Non' }}</td>
+                        <th>Campus</th>
+                        <td>{{ contributor.phone ? 'campus affiché' : 'Pas de campus trouvé' }}</td>
                     </tr>
                     <tr>
-                        <th>Roles</th>
-                        <td>{{ contributor.roles ? contributor.roles|json_encode : 'pas de rôle trouvé' }}</td>
+                        <th>Activé</th>
+                        <td>{{ contributor.enable ? 'Oui' : 'Non' }}</td>
                     </tr>
                     </tbody>
                 </table>
