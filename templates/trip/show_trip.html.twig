@@ -1,3 +1,58 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Détail de l'activité{% endblock %}
+
 {% block body %}
+    <div class="container">
+        <div class="card light-blue darken-4">
+            <div class="card-content row">
+                <h1 class="white-text">Sortie {{ trip.name }}</h1>
+
+                <table class="table white-text">
+                    <tbody>
+                    <tr>
+                        <th>Nom de l'activité</th>
+                        <td>{{ trip.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Commence le</th>
+                        <td>{{ trip.startedAt ? trip.startedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Durée de l'activité</th>
+                        <td>{{ trip.duration }}</td>
+                    </tr>
+                    <tr>
+                        <th>Limite d'inscription</th>
+                        <td>{{ trip.registrationLimit ? trip.registrationLimit|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre de participants possible</th>
+                        <td>{{ trip.registrationNumber }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ trip.description }}</td>
+                    </tr>
+                    <tr>
+                        {% if trip.contributors is empty %}
+                            <th>participants</th>
+                            <td>Pas encore de participants inscrit!</td>
+                        {% else %}
+                            <table class="white-text">
+                                <tbody>
+                                <tr>
+                                    <th>participants</th>
+                                    {% for contributor in trip.contributors %}
+                                        <td>{{ contributor.firstname }} {{ contributor.lastname }}</td>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
