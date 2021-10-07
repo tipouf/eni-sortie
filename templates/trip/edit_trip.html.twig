@@ -43,7 +43,7 @@
                 </div>
                 <div class="col s6">
                     <label>
-                        {{ form_widget(form.newLocation, { attr: { checked: (trip.location) ? true : false } }) }}
+                        {{ form_widget(form.newLocation, { attr: { checked: (trip.location) ? true : false, disabled: true }, data: true }) }}
                         <span>Ajouter un nouveau lieu</span>
                     </label>
                 </div>

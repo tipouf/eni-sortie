@@ -35,7 +35,7 @@ class TripService
     public function createTrip(TripModel $model, Trip $trip = null)
     {
         $location = null;
-        if ($model->isNewLocation()) {
+        if ($model->getLocationType()) {
             $location = $this->locationRepository->findOneBy(['name' => $model->getLocationType()->getName(),
                 'street' => $model->getLocationType()->getStreet()]);
             if ($location == null) {
@@ -67,7 +67,6 @@ class TripService
 
         $this->em->persist($location);
         $this->em->persist($location->getCity());
-        $location->addTrip($trip);
         $this->em->persist($trip);
 
         $this->em->flush();
