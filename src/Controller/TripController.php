@@ -77,7 +77,7 @@ class TripController extends AbstractController
         $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->tripService->editTrip($model);
+            $this->tripService->createTrip($model, $trip);
         }
         return $this->render('trip/edit_trip.html.twig', [
             'form' => $form->createView(),

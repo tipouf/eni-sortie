@@ -62,7 +62,8 @@ class CreateTripType extends AbstractType
             ->add('description', TextareaType::class, [
                 "attr" => [
                     "class" => "materialize-textarea"
-                ]
+                ],
+                "required" => false,
             ])
             ->add('promoter', EntityType::class, [
                 'label' => 'Campus',
