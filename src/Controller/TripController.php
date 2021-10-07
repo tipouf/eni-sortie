@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trip;
 use App\Form\CreateTripType;
+use App\Form\FiltersTripType;
 use App\Model\TripModel;
 use App\Services\TripService;
 use DateTime;
@@ -26,12 +27,21 @@ class TripController extends AbstractController
     /**
      * @Route("/", name="app_showTrips")
      */
-    public function showTrips()
+    public function showTrips(Request $request)
     {
+        $form = $this->createForm(FiltersTripType::class);
+
+        $form->handleRequest($request);
+
+        if($form -> isSubmitted() && $form -> isValid()) {
+
+        }
+
         $trips = $this->tripService->getAllTrips();
         //liste des sorties
         return $this->render('trip/trips_list.html.twig',[
-            'trips' => $trips
+            'trips' => $trips,
+            'form'  => $form->createView()
         ]);
     }
 
