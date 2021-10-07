@@ -90,6 +90,12 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $trips;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $profilePictureName;
+
     public function __construct()
     {
         $this->contributorTrips = new ArrayCollection();
@@ -320,4 +326,22 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getProfilePictureName(): string
+    {
+        return $this->profilePictureName;
+    }
+
+    /**
+     * @param string $profilePictureName
+     */
+    public function setProfilePictureName(string $profilePictureName): void
+    {
+        $this->profilePictureName = $profilePictureName;
+    }
+
+
 }

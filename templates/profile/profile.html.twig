@@ -6,14 +6,28 @@
     <div class="container">
         <div class="card light-blue darken-4" >
             <div class="card-content row">
-                <div>
-                    {% if contributor.pseudo %}
-                        <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="default">
+                <div class="col s6">
+                    {% if contributor.profilePictureName %}
+                        <img src="{{ asset('img/profilePictures/'~contributor.email~'/'~contributor.profilePictureName) }}" class="responsive-img" alt="default">
                     {% else %}
                         <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="user-pciture">
                     {% endif %}
                 </div>
-                <h2 class="white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h2>
+                <div class="col s6">
+                    {{ form_start(formImage) }}
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            {{ form_widget(formImage.profilePicture) }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <button class="btn-small">Changer d'image</button>
+                    {{ form_end(formImage) }}
+                </div>
+                <h4 class="col s12 white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
                 <table class="table">
                     <tbody>
                     <tr>

@@ -60,12 +60,6 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy'
-            });
-            $('.timepicker').timepicker({
-                twelveHour: false
-            });
             $('#create_trip_locationType').parent().attr('hidden', true)
             $('#create_trip_newLocation').click(function () {
                 if ($(this).prop('checked')) {

@@ -16,28 +16,9 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_home")
      */
-    public function index(Request $request, SluggerInterface $slugger): Response
+    public function index(): Response
     {
-        $form = $this->createForm(FileUploadType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $file */
-            $file = $form->get('profilePicture')->getData();
-            if ($file) {
-                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($fileName);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-                try {
-                    $file->move(
-                        $this->getParameter('upload_directory'),
-                        $newFilename
-                    );
-                    dd($file);
-                } catch (FileException $e) {
-                    dd($e->getMessage());
-                }
-            }
-        }
-        return $this->render("index.html.twig", ['form' => $form->createView()]);
+
+        return $this->render("index.html.twig", []);
     }
 }
