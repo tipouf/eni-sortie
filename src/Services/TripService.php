@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Entity\Contributor;
 use App\Entity\Location;
 use App\Entity\Status;
 use App\Entity\Trip;
@@ -13,6 +14,7 @@ use App\Repository\LocationRepository;
 use App\Repository\StatusRepository;
 use App\Repository\TripRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 
 class TripService
@@ -112,4 +114,14 @@ class TripService
     public function getByFilters(FilterModel $model) {
         return $this->tripRepository->findByFilters($model, $this->security->getUser());
     }
+
+  public function findOneTripByID(Trip $trip, Contributor $contributor){
+    $this->tripRepository->findOneBy(array('id' => 'id'));
+    $trip->addContributor($contributor);
+    $this->em->persist($contributor);
+    $this->em->flush();
+    $response = New Response();
+    var_dump($response);
+    return $response;
+  }
 }

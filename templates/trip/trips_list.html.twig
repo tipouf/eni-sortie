@@ -65,7 +65,7 @@
                                 <td></td>
                                 <td>{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}</td>
                                 <td>
-                                    <a class="btn-small"><i class="material-icons">add</i></a>
+                                    <a class="btn-small" href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">add</i></a>
                                     {% if trip.promoterContributor == app.user %}
                                         <a class="btn-small"><i class="material-icons">edit</i></a>
                                         <a class="btn-small"><i class="material-icons">cancel</i></a>
