@@ -2,80 +2,83 @@
 {% block body %}
 
     <div class="container">
+        <div class="card">
         <div class="card-content row" >
             {{ form_start(form) }}
-            <div class="col m2">
+            <div class="col s6">
                 {{ form_row(form.campus) }}
             </div>
-            <div class="col m2">
-                {{ form_row(form.tripname) }}
+
+            <label class="col s6">
+                {{ form_widget(form.organizedByMe) }}
+                <span>Sorties que j'ai organisé</span>
+            </label>
+            <label class="col s6">
+                {{ form_widget(form.mySubscription) }}
+                <span>Sorties où je suis inscrit</span>
+            </label>
+            <label class="col s6">
+                {{ form_widget(form.notSubscribed) }}
+                <span>Sortie où je ne suis pas inscrit</span>
+            </label>
+            <label class="col s6">
+                {{ form_widget(form.tripPassed) }}
+                <span>Sorties passées</span>
+            </label>
+            <div class="col s6">
+                {{ form_row(form.nameSearch) }}
+            </div >
+
+            <div class="col s6">
+                {{ form_widget(form.dateStartedAt) }}
             </div>
-            <div class="col m1">
-                {{ form_row(form.datestart) }}
+            <div class="col s6">
+                {{ form_widget(form.dateEndedAt) }}
             </div>
-            <div class="col m1" >
-                {{ form_row(form.dateend) }}
+            <div>
+                <button class="btn-small" type="submit">Rechercher</button>
             </div>
-                <label>
-                    {{ form_widget(form.trippromoter) }}
-                    <span>Sortie dont je suis l'organisateur/trice</span>
-                </label>
-                <label>
-                    {{ form_widget(form.tripregistered) }}
-                    <span>Sortie auxquelles je suis inscrit/e</span>
-                </label>
-                <label>
-                    {{ form_widget(form.tripnotregistered) }}
-                    <span>Sortie auxquelles je ne suis pas inscrit/e</span>
-                </label>
-                <label>
-                    {{ form_widget(form.triplimit) }}
-                    <span>Sorties passées</span>
-                </label>
-                {{ form_end(form) }}
-                <button class = "btn">
-                    Rechercher
-                </button>
+            {{ form_end(form) }}
+            <div class="card-content">
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Nom de la sortie</th>
+                            <th>Date de la sortie</th>
+                            <th>Clôture</th>
+                            <th>Inscrits/place</th>
+                            <th>Etat</th>
+                            <th>Inscrit</th>
+                            <th>Organisateur</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for trip in trips %}
+                            <tr>
+                                <td>{{ trip.name }}</td>
+                                <td>{{ trip.startedAt|date('d/m/Y H:i') }}</td>
+                                <td>{{ trip.registrationLimit|date('d/m/Y H:i')}}</td>
+                                <td>{{ trip.contributors|length }} / {{ trip.registrationNumber}}</td>
+                                <td>{{ trip.status.label}}</td>
+                                <td></td>
+                                <td>{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}</td>
+                                <td>
+                                    <a class="btn-small"><i class="material-icons">add</i></a>
+                                    {% if trip.promoterContributor == app.user %}
+                                        <a class="btn-small"><i class="material-icons">edit</i></a>
+                                        <a class="btn-small"><i class="material-icons">cancel</i></a>
+                                    {% endif %}
+                                    <a class="btn-small"><i class="material-icons">insert_drive_file</i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container row align">
-    <div class=" card light-blue darken-4 col s12" style="padding: 0em 0 3em 0">
-        <card class="card-content">
-            <div class="col m9 offset-m0">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Nom de la sortie</th>
-                        <th>Date de la sortie</th>
-                        <th>Clôture</th>
-                        <th>Inscrits/place</th>
-                        <th>Etat</th>
-                        <th>Inscrit</th>
-                        <th>Organisateur</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for trip in trips %}
-                        <tr>
-                            <td>{{ trip.name }}</td>
-                            <td>{{ trip.startedAt|date('d/m/Y H:i') }}</td>
-                            <td>{{ trip.registrationLimit|date('d/m/Y')}}</td>
-                            <td>/{{ trip.registrationNumber}}</td>
-                            <td>{{ trip.status.label}}</td>
-                            <td></td>
-                           <td>{#{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}#}</td>
-                            <td></td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="4">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-    </div>
-    </div>
 {% endblock %}
