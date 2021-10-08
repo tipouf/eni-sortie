@@ -8,10 +8,14 @@ use App\Form\FilterType;
 use App\Model\FilterModel;
 use App\Model\TripModel;
 use App\Services\TripService;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use App\Repository\TripRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/trips")
@@ -19,10 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class TripController extends AbstractController
 {
   private TripService $tripService;
+  private EntityManagerInterface $manager;
+  private TripRepository $tripRepository;
 
-  public function __construct(TripService $tripService)
+  public function __construct(TripService $tripService, EntityManagerInterface $manager, TripRepository $tripRepository)
   {
     $this->tripService = $tripService;
+    $this->manager = $manager;
+    $this->tripRepository = $tripRepository;
   }
 
   /**
@@ -104,5 +112,15 @@ class TripController extends AbstractController
       'trip' => $trip
     ]);
   }
+
+  /**
+   * @Route("/{trip}/subscribe", name="app_subscribeTrip")
+   */
+  public function subscribeTrip(Trip $trip)
+  {
+    $contributor = $this->getUser();
+    $this->tripService->findOneTripByID($trip, $contributor);
+  }
+
 
 }
