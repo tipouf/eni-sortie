@@ -71,7 +71,7 @@ class Trip
 
     /**
      * @ORM\ManyToMany(targetEntity=Contributor::class, inversedBy="trips")
-     * @ORM\JoinTable(name="ContributorTrip")
+     * @ORM\JoinTable(name="contributor_trip")
      */
     private $contributors;
 

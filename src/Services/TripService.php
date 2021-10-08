@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Entity\Location;
 use App\Entity\Status;
 use App\Entity\Trip;
+use App\Model\FilterModel;
 use App\Model\TripModel;
 use App\Repository\LocationRepository;
 use App\Repository\StatusRepository;
@@ -106,5 +107,9 @@ class TripService
         $trip->setStatus($status);
         $this->em->persist($trip);
         $this->em->flush();
+    }
+
+    public function getByFilters(FilterModel $model) {
+        return $this->tripRepository->findByFilters($model, $this->security->getUser());
     }
 }

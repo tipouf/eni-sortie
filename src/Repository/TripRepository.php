@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Contributor;
+use App\Entity\Status;
 use App\Entity\Trip;
+use App\Model\FilterModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,22 +22,58 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
-    // /**
-    //  * @return Trip[] Returns an array of Trip objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByFilters(FilterModel $filter, Contributor $user)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('f')
+            ->select('s', 'f')
+            ->join('f.status', 's');
+
+        if ($filter->isOrganizedByMe()) {
+            $qb = $qb
+                ->andWhere(':user = f.promoterContributor')
+                ->setParameter('user', $user->getId());
+        }
+        if ($filter->isMySubscription()) {
+            $qb = $qb
+                ->andWhere(':user MEMBER OF f.contributors')
+                ->setParameter('user', $user->getId());
+        }
+        if ($filter->isNotSubscribed()) {
+            $qb = $qb
+                ->andWhere(':user NOT MEMBER OF f.contributors')
+                ->setParameter('user', $user->getId());
+        }
+        if ($filter->isTripPassed()) {
+            $qb = $qb
+                ->andWhere('s.label = :status')
+                ->setParameter('status', Status::PASSED);
+        } else {
+            $qb = $qb
+                ->andWhere('s.label != :status')
+                ->setParameter('status', Status::PASSED);
+        }
+        if ($filter->getNameSearch() && $filter->getNameSearch() !== "") {
+            $qb = $qb
+                ->andWhere('f.name LIKE :name')
+                ->setParameter('name', '%'.$filter->getNameSearch().'%');
+        }
+        if ($filter->getCampus()) {
+            $qb = $qb
+                ->andWhere('f.promoter = :campusId')
+                ->setParameter('campusId', $filter->getCampus()->getId());
+        }
+        if ($filter->getDateEndedAt()) {
+            $qb = $qb
+                ->andWhere('f.startedAt <= :limitDate')
+                ->setParameter('limitDate', $filter->getDateEndedAt());
+        }
+        if ($filter->getDateStartedAt()) {
+            $qb = $qb
+                ->andWhere('f.startedAt >= :startedDate')
+                ->setParameter('startedDate', $filter->getDateStartedAt());
+        }
+        return $qb->getQuery()->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Trip
@@ -47,6 +86,7 @@ class TripRepository extends ServiceEntityRepository
         ;
     }
     */
+
     public function findByStatusName(string $status)
     {
         return $this->createQueryBuilder('t')

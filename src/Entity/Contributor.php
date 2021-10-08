@@ -86,7 +86,7 @@ class Contributor implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Trip::class, mappedBy="contributors")
-     * @ORM\JoinTable(name="ContributorTrip")
+     * @ORM\JoinTable(name="contributor_trip")
      */
     private $trips;
 
