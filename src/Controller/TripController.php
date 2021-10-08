@@ -6,15 +6,10 @@ use App\Entity\Status;
 use App\Entity\Trip;
 use App\Form\CancelTripType;
 use App\Form\CreateTripType;
-<<<<<<< HEAD
-
-=======
 use App\Form\FileUploadType;
 use App\Form\FiltersTripType;
->>>>>>> 8f84bb225412ee253c9bd95a3a511f7fa191681a
 use App\Model\TripModel;
 use App\Services\TripService;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,15 +99,6 @@ class TripController extends AbstractController
     {
         $form = $this->createForm(CancelTripType::class);
         $form->handleRequest($request);
-<<<<<<< HEAD
-        if ($form->isSubmitted() && $form->isValid()) {
-            $motif = $form->get("motif")->getData();
-            $this->tripService->changeStatus($trip, Status::CANCELED);
-        }
-
-        return $this->render('trip/cancel_trip.html.twig', [
-            'trip' => $trip,
-=======
         if($form->isSubmitted() && $form->isValid()){
             $motif = $form -> get("motif")->getData();
             $this->tripService->changeStatus($trip,Status::CANCELED);
@@ -120,7 +106,6 @@ class TripController extends AbstractController
 
         return $this->render('trip/cancel_trip.html.twig', [
             'trip'=> $trip,
->>>>>>> 8f84bb225412ee253c9bd95a3a511f7fa191681a
             'form' => $form->createView()
         ]);
     }
