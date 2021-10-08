@@ -8,21 +8,29 @@ use App\Form\FilterType;
 use App\Model\FilterModel;
 use App\Model\TripModel;
 use App\Services\TripService;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Repository\TripRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 /**
- * @Route("/trips", name="app_trips")
+ * @Route("/trips")
  */
 class TripController extends AbstractController
 {
     private TripService $tripService;
+    private EntityManagerInterface $manager;
+    private TripRepository $tripRepository;
 
-    public function __construct(TripService $tripService)
+    public function __construct(TripService $tripService, EntityManagerInterface $manager, TripRepository $tripRepository)
     {
         $this->tripService = $tripService;
+        $this->manager = $manager;
+        $this->tripRepository = $tripRepository;
     }
 
     /**
@@ -36,13 +44,13 @@ class TripController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form -> isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $trips = $this->tripService->getByFilters($model);
         }
 
-        return $this->render('trip/trips_list.html.twig',[
+        return $this->render('trip/trips_list.html.twig', [
             'trips' => $trips,
-            'form'  => $form->createView()
+            'form' => $form->createView()
         ]);
     }
 
@@ -51,14 +59,12 @@ class TripController extends AbstractController
      */
     public function addTrip(Request $request)
     {
-        $model = new Trip();
+        $model = new TripModel();
         $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-           //
-            $newLocation = $form->get('locationType')->getData();
-            $city = $form->get('city')->getData();
-            $this->tripService->createTrip($model, $city, $newLocation);
+            $this->tripService->createTrip($model);
+
             return $this->redirectToRoute('app_home');
         }
         return $this->render('trip/new_trip.html.twig', [
@@ -76,11 +82,11 @@ class TripController extends AbstractController
     /**
      * @Route("/{trip}", name="app_showTrip", methods={"GET"})
      */
-      public function showTrip(Trip $trip): Response
+    public function showTrip(Trip $trip): Response
     {
-      return $this->render('trip/show_trip.html.twig', [
-        'trip' => $trip,
-      ]);
+        return $this->render('trip/show_trip.html.twig', [
+            'trip' => $trip,
+        ]);
     }
 
     /**
@@ -95,13 +101,11 @@ class TripController extends AbstractController
      */
     public function editTrip(Trip $trip, Request $request)
     {
-        $form = $this->createForm(CreateTripType::class, $trip);
+        $model = new TripModel();
+        $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //
-            $newLocation = $form->get('locationType')->getData();
-            $city = $form->get('city')->getData();
-            $this->tripService->createTrip($trip, $city, $newLocation);
+            $this->tripService->createTrip($model, $trip);
         }
         return $this->render('trip/edit_trip.html.twig', [
             'form' => $form->createView(),
@@ -109,4 +113,24 @@ class TripController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{trip}/subscribe", name="app_subscribeTrip")
+     */
+    public function subscribeTrip(Trip $trip)
+    {
+        $contributor = $this->getUser();
+        $this->tripService->subscribeTrip($trip, $contributor);
+        return $this->redirectToRoute('app_showTrips');
+    }
+
+    /**
+     * @Route("/{trip}/unsubscribe", name="app_unsubscribeTrip")
+     */
+    public function unsubscribeTrip(Trip $trip)
+    {
+        $contributor = $this->getUser();
+        $this->tripService->unsubscribeTrip($trip, $contributor);
+        return $this->redirectToRoute('app_showTrips');
+
+    }
 }
