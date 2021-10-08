@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="container row align"  style="padding: 1em 0 3em 0">
+        <div class="col m4">
+        <table class="responsive-table" >
+            <tbody>
+            <tr>
+                <th>Nom de la sortie</th>
+                <td>{{ trip.name}}</td>
+            </tr>
+            <tr>
+                <th>Date de la sortie</th>
+                <td>{{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Campus</th>
+                <td>{{ trip.promoter.name }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ trip.location.name }}</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    </div>
+    <div class="container row">
+        {{ form_start(form) }}
+        {{ form_row(form.motif) }}
+        <button class = "btn" type="submit">
+            Enregistrer
+        </button>
+        <a href="" class = "btn">
+            Annuler
+        </a>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
