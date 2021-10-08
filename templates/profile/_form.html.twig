@@ -1,33 +1,42 @@
 {{ form_start(form) }}
-<div class="col m3">
-    {{ form_row(form.pseudo) }}
+<div class="container">
+    <div class="col m3">
+        {{ form_row(form.pseudo) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.email) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.firstname) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.lastname) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.password.first) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.password.second) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.phone) }}
+    </div>
+    <div class="col m3">
+        {{ form_row(form.campus) }}
+    </div>
+    <div class="col m3">
+        <label>
+            {{ form_widget(form.enable) }}
+            <span>Activé</span>
+        </label>
+    </div>
 </div>
-<div class="col m3">
-    {{ form_row(form.email) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.firstname) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.lastname) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.password.first) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.password.second) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.phone) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.campus) }}
-</div>
-<div class="col m3">
-    {{ form_row(form.enable) }}
-</div>
-
 <div class="col s12">
     <button class="btn" type="submit">{{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}
+{% if not form.vars.valid %}
+    <div class="alert alert-error">
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
