@@ -115,13 +115,17 @@ class TripService
         return $this->tripRepository->findByFilters($model, $this->security->getUser());
     }
 
-  public function findOneTripByID(Trip $trip, Contributor $contributor){
+  public function subscribeTrip(Trip $trip, Contributor $contributor){
     $this->tripRepository->findOneBy(array('id' => 'id'));
     $trip->addContributor($contributor);
     $this->em->persist($contributor);
     $this->em->flush();
-    $response = New Response();
-    var_dump($response);
-    return $response;
+  }
+
+  public function unsubscribeTrip(Trip $trip, Contributor $contributor){
+    $this->tripRepository->findOneBy(array('id' => 'id'));
+    $trip->removeContributor($contributor);
+    $this->em->persist($contributor);
+    $this->em->flush();
   }
 }

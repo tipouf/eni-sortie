@@ -68,7 +68,7 @@
                                     <a class="btn-small" href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">add</i></a>
                                     {% if trip.promoterContributor == app.user %}
                                         <a class="btn-small"><i class="material-icons">edit</i></a>
-                                        <a class="btn-small"><i class="material-icons">cancel</i></a>
+                                        <a class="btn-small" href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">cancel</i></a>
                                     {% endif %}
                                     <a class="btn-small" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i class="material-icons">zoom_in</i></a>
                                 </td>

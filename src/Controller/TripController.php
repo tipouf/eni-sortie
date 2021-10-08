@@ -119,8 +119,18 @@ class TripController extends AbstractController
   public function subscribeTrip(Trip $trip)
   {
     $contributor = $this->getUser();
-    $this->tripService->findOneTripByID($trip, $contributor);
+    $this->tripService->subscribeTrip($trip, $contributor);
+    return $this->redirectToRoute('app_showTrips');
   }
 
+  /**
+   * @Route("/{trip}/unsubscribe", name="app_unsubscribeTrip")
+   */
+  public function unsubscribeTrip(Trip $trip)
+  {
+    $contributor = $this->getUser();
+    $this->tripService->unsubscribeTrip($trip, $contributor);
+    return $this->redirectToRoute('app_showTrips');
 
+  }
 }
