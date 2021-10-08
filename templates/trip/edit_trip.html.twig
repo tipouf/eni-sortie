@@ -11,21 +11,15 @@
                 <div class="col m6">
                     {{ form_row(form.promoter, { attr: { value: trip.promoter.id } }) }}
                 </div>
-                <div class="col m3">
+                <div class="col m6">
                     {{ form_row(form.startedAt, { attr: { value: trip.startedAt|date('d/m/Y') } }) }}
-                </div>
-                <div class="col m3">
-                    {{ form_row(form.startedAtTime, { attr: { value: trip.startedAt|date('H:i') } }) }}
                 </div>
                 <div class="col m6">
                     {{ form_row(form.city, { attr: { value: trip.location.city.name } }) }}
                 </div>
 
-                <div class="col m3">
+                <div class="col m6">
                     {{ form_row(form.registrationLimit, { attr: { value: trip.registrationLimit|date('d/m/Y') } }) }}
-                </div>
-                <div class="col m3">
-                    {{ form_row(form.registrationLimitTime, { attr: { value: trip.registrationLimit|date('H:i') } }) }}
                 </div>
 
                 <div class="col m6">
@@ -43,15 +37,15 @@
                 </div>
                 <div class="col s6">
                     <label>
-                        {{ form_widget(form.newLocation, { attr: { checked: (trip.location) ? true : false, disabled: true }, data: true }) }}
+                        {{ form_widget(form.newLocation) }}
                         <span>Ajouter un nouveau lieu</span>
                     </label>
                 </div>
                 <div id="new_location" class="col s6 offset-s6">
-                    {{ form_row(form.locationType.name, { attr: { value: trip.location.name } }) }}
-                    {{ form_row(form.locationType.street, { attr: { value: trip.location.street } }) }}
-                    {{ form_row(form.locationType.latitude, { attr: { value: trip.location.latitude } }) }}
-                    {{ form_row(form.locationType.longitude, { attr: { value: trip.location.longitude } }) }}
+                    {{ form_row(form.locationType.name) }}
+                    {{ form_row(form.locationType.street) }}
+                    {{ form_row(form.locationType.latitude) }}
+                    {{ form_row(form.locationType.longitude) }}
                 </div>
                 <div class="col s12">
                     <button class="btn" type="submit">Valider</button>

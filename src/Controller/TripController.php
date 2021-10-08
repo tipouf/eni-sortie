@@ -51,12 +51,14 @@ class TripController extends AbstractController
      */
     public function addTrip(Request $request)
     {
-        $model = new TripModel();
+        $model = new Trip();
         $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->tripService->createTrip($model);
-
+           //
+            $newLocation = $form->get('locationType')->getData();
+            $city = $form->get('city')->getData();
+            $this->tripService->createTrip($model, $city, $newLocation);
             return $this->redirectToRoute('app_home');
         }
         return $this->render('trip/new_trip.html.twig', [
@@ -93,11 +95,13 @@ class TripController extends AbstractController
      */
     public function editTrip(Trip $trip, Request $request)
     {
-        $model = new TripModel();
-        $form = $this->createForm(CreateTripType::class, $model);
+        $form = $this->createForm(CreateTripType::class, $trip);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->tripService->createTrip($model, $trip);
+            //
+            $newLocation = $form->get('locationType')->getData();
+            $city = $form->get('city')->getData();
+            $this->tripService->createTrip($trip, $city, $newLocation);
         }
         return $this->render('trip/edit_trip.html.twig', [
             'form' => $form->createView(),
