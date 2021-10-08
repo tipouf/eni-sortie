@@ -29,32 +29,17 @@ class CreateTripType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom de la sortie',
             ])
-            ->add('startedAt', TextType::class, [
-                'label' => 'Commence le',
-                "attr" => [
-                    "class" => "datepicker"
-                ]
+            ->add('startedAt', DateTimeType::class, [
+                'attr' => ['class'=> ''],
+                'required' => false,
+                'widget' => 'single_text'
             ])
-            ->add('startedAtTime', TextType::class, [
-                'label' => 'à',
-                "attr" => [
-                    "class" => "timepicker"
-                ]
+            ->add('registrationLimit', DateTimeType::class, [
+                'required' => false,
+                'widget' => 'single_text'
             ])
             ->add('duration', IntegerType::class, [
                 'label' => 'Durée (en min.)',
-            ])
-            ->add('registrationLimit',TextType::class, [
-                'label' => "Date limite d'inscription le",
-                "attr" => [
-                    "class" => "datepicker"
-                ]
-            ])
-            ->add('registrationLimitTime', TextType::class, [
-                'label' => 'à',
-                "attr" => [
-                    "class" => "timepicker"
-                ]
             ])
             ->add('registrationNumber', IntegerType::class, [
                 'label' => 'Nombre de place max.',
@@ -81,6 +66,7 @@ class CreateTripType extends AbstractType
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.name', 'ASC');
                 },
+                'mapped' => false,
                 'choice_label' => 'name',
                 'required' => false
             ])
@@ -92,7 +78,6 @@ class CreateTripType extends AbstractType
                         ->orderBy('u.name', 'ASC');
                 },
                 'attr' => [
-                    'disabled' => true
                 ],
                 'choice_label' => 'name',
                 'required' => false
@@ -101,9 +86,11 @@ class CreateTripType extends AbstractType
                 "attr" => [
                     "class" => "materialize-textarea"
                 ],
+                'mapped' => false,
                 'required' => false
             ])
             ->add('locationType', LocationType::class, [
+                'mapped' => false,
                 'required' => false
             ])
         ;
@@ -112,7 +99,7 @@ class CreateTripType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => TripModel::class,
+            'data_class' => Trip::class,
         ]);
     }
 }

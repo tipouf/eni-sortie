@@ -17,24 +17,14 @@ class TripModel
     private $name;
 
     /**
-     * @var string
+     * @var DateTime
      */
     private $startedAt;
 
     /**
-     * @var string
-     */
-    private $startedAtTime;
-
-    /**
-     * @var string
+     * @var DateTime
      */
     private $registrationLimit;
-
-    /**
-     * @var string
-     */
-    private $registrationLimitTime;
 
     /**
      * @var integer
@@ -93,67 +83,35 @@ class TripModel
     }
 
     /**
-     * @return string
+     * @return DateTime|null
      */
-    public function getStartedAt(): ?string
+    public function getStartedAt(): ?DateTime
     {
         return $this->startedAt;
     }
 
     /**
-     * @param string $startedAt
+     * @param DateTime $startedAt
      */
-    public function setStartedAt(string $startedAt): void
+    public function setStartedAt(DateTime $startedAt): void
     {
         $this->startedAt = $startedAt;
     }
 
     /**
-     * @return string
+     * @return DateTime|null
      */
-    public function getStartedAtTime(): ?string
-    {
-        return $this->startedAtTime;
-    }
-
-    /**
-     * @param string $startedAtTime
-     */
-    public function setStartedAtTime(string $startedAtTime): void
-    {
-        $this->startedAtTime = $startedAtTime;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getRegistrationLimit(): ?string
+    public function getRegistrationLimit(): ?DateTime
     {
         return $this->registrationLimit;
     }
 
     /**
-     * @param string $registrationLimit
+     * @param DateTime $registrationLimit
      */
-    public function setRegistrationLimit(string $registrationLimit): void
+    public function setRegistrationLimit(DateTime $registrationLimit): void
     {
         $this->registrationLimit = $registrationLimit;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRegistrationLimitTime(): string
-    {
-        return $this->registrationLimitTime;
-    }
-
-    /**
-     * @param string $registrationLimitTime
-     */
-    public function setRegistrationLimitTime(string $registrationLimitTime): void
-    {
-        $this->registrationLimitTime = $registrationLimitTime;
     }
 
     /**
