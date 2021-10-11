@@ -112,7 +112,7 @@ class TripController extends AbstractController
     /**
      * @Route("/{trip}/subscribe", name="app_subscribeTrip")
      */
-    public function subscribeTrip(Trip $trip)
+    public function subscribeTrip(Trip $trip):Response
     {
         $contributor = $this->getUser();
         $this->tripService->subscribeTrip($trip, $contributor);
@@ -122,7 +122,7 @@ class TripController extends AbstractController
     /**
      * @Route("/{trip}/unsubscribe", name="app_unsubscribeTrip")
      */
-    public function unsubscribeTrip(Trip $trip)
+    public function unsubscribeTrip(Trip $trip):Response
     {
         $contributor = $this->getUser();
         $this->tripService->unsubscribeTrip($trip, $contributor);
