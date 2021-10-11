@@ -9,13 +9,13 @@
                 <div class="col m8 offset-m2">
                     <h1 class="white-text">Edition</h1>
                     {{ include('city/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+                    <a class="btn" href="{{ path('main_cities') }}">Retour à la liste des villes</a>
                 </div>
-                <a class="btn" href="{{ path('main_cities') }}">Retour à la liste des villes</a>
+            </card>
         </div>
 
     </div>
 
-    </div>
-    </br>
+
 
 {% endblock %}

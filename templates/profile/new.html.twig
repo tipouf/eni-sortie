@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Contributor{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card light-blue darken-4">
+            <div class="card-content row">
+                <h1 class="white-text">Créer un nouvel utilisateur</h1>
+
+                {{ include('profile/_form.html.twig') }}
+
+                <a class="btn" href="{{ path('app_home') }}">retour a la page d'accueil</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
