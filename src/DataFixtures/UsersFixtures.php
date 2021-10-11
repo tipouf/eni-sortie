@@ -20,22 +20,25 @@ class UsersFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         // $contributor = $this->createContributor();
-        $contributorAdmin = $this->createContributor();
-        $contributorAdmin->setRoles(['ROLE_ADMIN']);
-        $manager->persist($contributorAdmin);
+        $this->createContributor("Kevin","Huet","kevin.huet2020campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Antoine","Quatrevaux","antoine.quatrevaux2020campus-eni.fr","07607070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Nicolas","Cindon","nicolas.cindon2020campus-eni.fr","0706070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Jean","Jean","jean.jean2020campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
         $manager->flush();
+
     }
 
-    private function createContributor(): Contributor
+    private function createContributor($firstName,$lastName,$email,$phone,$role,ObjectManager $manager): Contributor
     {
         $contributor = new Contributor();
-        $contributor->setFirstname("kevin");
-        $contributor->setLastname("huet");
-        $contributor->setEmail("kevin.huet2020@campus-eni.fr");
-        $contributor->setPhone("0707070707");
+        $contributor->setFirstname($firstName);
+        $contributor->setLastname($lastName);
+        $contributor->setEmail($email);
+        $contributor->setPhone($phone);
         $contributor->setPassword($this->hasher->hashPassword($contributor, "test"));
-        $contributor->setRoles(['ROLE_USER']);
+        $contributor->setRoles([$role]);
         $contributor->setEnable(true);
+        $manager->persist($contributor);
         return $contributor;
     }
 }

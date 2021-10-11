@@ -19,9 +19,19 @@ class CampusFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $campus = new Campus();
-        $campus->setName("campusTest");
-        $manager->persist($campus);
+        //$campus = new Campus();
+        //$campus->setName("campusTest");
+        $this->createCampus("CampusTest",$manager);
+        $this->createCampus("CampusRennes",$manager);
+        $this->createCampus("CampusNantes",$manager);
+        $this->createCampus("CampusQuimper",$manager);
+        //$manager->persist($campus);
         $manager->flush();
+    }
+
+    public function createCampus($name, ObjectManager $manager){
+        $campus = new Campus();
+        $campus->setName($name);
+        $manager->persist($campus);
     }
 }
