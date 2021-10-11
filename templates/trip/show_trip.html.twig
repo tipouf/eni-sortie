@@ -30,7 +30,7 @@
                 <tr>
                     <th>Description</th>
                     <td class="white-text">{{ trip.description }}</td>
-                </br>
+                    </br>
                 <tr>
                     {% if trip.contributors is empty %}
                         <th>participants</th>
@@ -40,14 +40,17 @@
                         <table class="table container responsive-table light-blue darken-1">
                             <tbody>
                             <tr>
-                                <th></th>
+                                <th>participants</th>
                                 <td>PSEUDO</td>
                                 <td>Nom du participant</td>
                             </tr>
-                            <th>participants</th>
+
                             {% for contributor in trip.contributors %}
-                                <td class="white-text">{{ contributor.pseudo }}</td>
-                                <td class="white-text">{{ contributor.firstname }} {{ contributor.lastname }}</td>
+                                <tr>
+                                    <td></td>
+                                    <td class="white-text">{{ contributor.pseudo }}</td>
+                                    <td class="white-text">{{ contributor.firstname }} {{ contributor.lastname }}</td>
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
