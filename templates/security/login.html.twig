@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container row align">
-        <div class=" card light-blue darken-4 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
+        <div class=" card grey lighten-5 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0; margin-top: 5em">
             <card class="card-content">
                 <form method="post" class="col m8 offset-m2">
                     {% if error %}
@@ -34,11 +34,12 @@
                         </label>
                     </div>
 
-                    <button class="btn" type="submit">
-                        Se connecter
-                    </button>
+                        <button style="margin-top: 1em" class="btn" type="submit">Se connecter</button>
                 </form>
-                <a class="btn" style="margin-left: 20px;margin-top:20px" href="{{ path('app_forgot_password_request') }}">Mot de passe perdu</a>
+                <div class="col s12 offset-m2" style="margin-top: 1em">
+                    <a class="btn" href="{{ path('app_forgot_password_request') }}">Mot de passe perdu</a>
+                </div>
+            </card>
         </div>
     </div>
 {% endblock %}
