@@ -15,6 +15,7 @@ use App\Model\TripModel;
 use App\Repository\LocationRepository;
 use App\Repository\StatusRepository;
 use App\Repository\TripRepository;
+use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 
@@ -104,5 +105,20 @@ class TripService
       $trip->removeContributor($contributor);
       $this->em->persist($trip);
       $this->em->flush();
+    }
+
+    private function checkIfIsExpiredOrFull(array &$trips) {
+        /** @var Trip $trip */
+        foreach ($trips as $trip) {
+            if ($trip->getStatus()->getLabel() == Status::CANCELED || $trip->getStatus()->getLabel() == Status::PASSED)
+                return;
+            if ($trip->getStatus()->getLabel() != Status::PASSED && $trip->getStartedAt() > $trip->getStartedAt()->add(new DateInterval('P1M'))) {
+                $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::PASSED]));
+            }
+            if ($trip->getRegistrationLimit() < new \DateTime('now') || $trip->getRegistrationNumber() == $trip->getContributors()->count()) {
+                $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::CLOSED]));
+            }
+        }
+        return;
     }
 }
