@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Entity\City;
+use App\Entity\Contributor;
 use App\Entity\Location;
 use App\Entity\Status;
 use App\Entity\Trip;
@@ -91,5 +92,17 @@ class TripService
 
     public function getByFilters(FilterModel $model) {
         return $this->tripRepository->findByFilters($model, $this->security->getUser());
+    }
+
+  public function subscribeTrip(Trip $trip, Contributor $contributor){
+    $trip->addContributor($contributor);
+    $this->em->persist($trip);
+    $this->em->flush();
+  }
+
+    public function unsubscribeTrip(Trip $trip, Contributor $contributor){
+      $trip->removeContributor($contributor);
+      $this->em->persist($trip);
+      $this->em->flush();
     }
 }
