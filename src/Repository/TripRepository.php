@@ -22,23 +22,23 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
-    public function findByFilters(FilterModel $filter, Contributor $user)
+    public function findByFilters(FilterModel $filter, Contributor $user = null)
     {
         $qb = $this->createQueryBuilder('f')
             ->select('s', 'f')
             ->join('f.status', 's');
 
-        if ($filter->isOrganizedByMe()) {
+        if ($filter->isOrganizedByMe() && $user) {
             $qb = $qb
                 ->andWhere(':user = f.promoterContributor')
                 ->setParameter('user', $user->getId());
         }
-        if ($filter->isMySubscription()) {
+        if ($filter->isMySubscription() && $user) {
             $qb = $qb
                 ->andWhere(':user MEMBER OF f.contributors')
                 ->setParameter('user', $user->getId());
         }
-        if ($filter->isNotSubscribed()) {
+        if ($filter->isNotSubscribed() && $user) {
             $qb = $qb
                 ->andWhere(':user NOT MEMBER OF f.contributors')
                 ->setParameter('user', $user->getId());
