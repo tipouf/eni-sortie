@@ -92,7 +92,9 @@ class TripService
     }
 
     public function getByFilters(FilterModel $model) {
-        return $this->tripRepository->findByFilters($model, $this->security->getUser());
+        $results = $this->tripRepository->findByFilters($model, $this->security->getUser());
+        $this->checkIfIsExpiredOrFull($results);
+        return $results;
     }
 
   public function subscribeTrip(Trip $trip, Contributor $contributor){
@@ -114,11 +116,12 @@ class TripService
                 return;
             if ($trip->getStatus()->getLabel() != Status::PASSED && $trip->getStartedAt() > $trip->getStartedAt()->add(new DateInterval('P1M'))) {
                 $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::PASSED]));
-            }
-            if ($trip->getRegistrationLimit() < new \DateTime('now') || $trip->getRegistrationNumber() == $trip->getContributors()->count()) {
+                $this->em->persist($trip);
+            } else if ($trip->getRegistrationLimit() < new \DateTime('now') || $trip->getRegistrationNumber() == $trip->getContributors()->count()) {
                 $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::CLOSED]));
+                $this->em->persist($trip);
             }
         }
-        return;
+        $this->em->flush();
     }
 }
