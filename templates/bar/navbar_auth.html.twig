@@ -6,7 +6,8 @@
             <li><a href="">Accueil</a></li>
             <li><a href="{{ path('main_cities') }}">Villes</a></li>
             <li><a href="">Campus</a></li>
-            <li><a href="{{ path('contributor_profil', {'contributor': app.user.id }) }}">Mon profil</a></li>
+            <li><a href="{{ path('contributor_profile', {'contributor': app.user.id }) }}">Mon profil</a></li>
+            <li><a href="{{ path('contributor_new') }}">Créer utilisateur</a></li>
             <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
         </ul>
     </div>
@@ -16,6 +17,10 @@
     <li><a href="">Accueil</a></li>
     <li><a href="{{ path('main_cities') }}">Villes</a></li>
     <li><a href="">Campus</a></li>
-    <li><a href="{{ path('contributor_profil', {'contributor': app.user.id }) }}">Mon profil</a></li>
+    <li><a href="{{ path('contributor_profile', {'contributor': app.user.id }) }}">Mon profil</a></li>
+    {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{ path('contributor_new') }}">Créer utilisateur</a></li>
+    {% endif %}
+
     <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
 </ul>
