@@ -121,24 +121,25 @@ class TripController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{trip}/subscribe", name="app_subscribeTrip")
-     */
-    public function subscribeTrip(Trip $trip):Response
-    {
-        $contributor = $this->getUser();
-        $this->tripService->subscribeTrip($trip, $contributor);
-        return $this->redirectToRoute('app_showTrips');
-    }
+  /**
+   * @Route("/{trip}/subscribe", name="app_subscribeTrip")
+   */
+  public function subscribeTrip(Trip $trip): Response
+  {
+    $contributor = $this->getUser();
+    $this->tripService->subscribeTrip($trip, $contributor);
+    $this->addFlash("success", "Vous êtes à présent inscrit!");
+    return $this->redirectToRoute('app_showTrips');
+  }
 
-    /**
-     * @Route("/{trip}/unsubscribe", name="app_unsubscribeTrip")
-     */
-    public function unsubscribeTrip(Trip $trip):Response
-    {
-        $contributor = $this->getUser();
-        $this->tripService->unsubscribeTrip($trip, $contributor);
-        return $this->redirectToRoute('app_showTrips');
-
-    }
+  /**
+   * @Route("/{trip}/unsubscribe", name="app_unsubscribeTrip")
+   */
+  public function unsubscribeTrip(Trip $trip): Response
+  {
+    $contributor = $this->getUser();
+    $this->tripService->unsubscribeTrip($trip, $contributor);
+    $this->addFlash("success", "Vous êtes à présent désinscrit!");
+    return $this->redirectToRoute('app_showTrips');
+  }
 }
