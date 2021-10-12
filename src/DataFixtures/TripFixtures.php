@@ -7,6 +7,7 @@ use App\Entity\Status;
 use App\Entity\Trip;
 use App\Repository\CampusRepository;
 use App\Repository\ContributorRepository;
+use App\Repository\LocationRepository;
 use App\Repository\StatusRepository;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,27 +18,30 @@ class TripFixtures extends Fixture
     private CampusRepository $campusRepository;
     private ContributorRepository $contributorRepository;
     private StatusRepository $statusRepository;
+    private LocationRepository $locationRepository;
 
-    public function __construct(CampusRepository $campusRepository, ContributorRepository  $contributorRepository, StatusRepository $statusRepository)
+    public function __construct(LocationRepository $locationRepository, CampusRepository $campusRepository, ContributorRepository $contributorRepository, StatusRepository $statusRepository)
     {
-        $this->campusRepository=$campusRepository;
-        $this->contributorRepository=$contributorRepository;
-        $this->statusRepository=$statusRepository;
+        $this->locationRepository = $locationRepository;
+        $this->campusRepository = $campusRepository;
+        $this->contributorRepository = $contributorRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     public function load(ObjectManager $manager)
     {
         // TODO: Implement load() method.
         //new DateTime("%")
-        $this->createTrip(50,"1ere Sortie",new DateTime('2021-01-01'),10,new DateTime('2021-01-02'),Status::CREATED,$manager);
-        $this->createTrip(60,"2eme Sortie",new DateTime('2021-01-03'),10,new DateTime('2021-01-04'),Status::OPEN,$manager);
-        $this->createTrip(50,"Accrobranche",new DateTime('2021-04-05'),10,new DateTime('2021-04-05'),Status::CREATED,$manager);
-        $this->createTrip(50,"Piscine",new DateTime('2021-06-07'),10,new DateTime('2021-06-08'),Status::CREATED,$manager);
+        $this->createTrip(50, "1ere Sortie", new DateTime('2021-01-01'), 10, new DateTime('2021-01-02'), Status::CREATED, $manager);
+        $this->createTrip(60, "2eme Sortie", new DateTime('2021-01-03'), 10, new DateTime('2021-01-04'), Status::OPEN, $manager);
+        $this->createTrip(50, "Accrobranche", new DateTime('2021-04-05'), 10, new DateTime('2021-04-05'), Status::CREATED, $manager);
+        $this->createTrip(50, "Piscine", new DateTime('2021-06-07'), 10, new DateTime('2021-06-08'), Status::CREATED, $manager);
         $manager->flush();
 
     }
 
-    public function createTrip($duration,$name,$registrationLimit,$registrationNumber,$startedAt,$status,ObjectManager $manager){
+    public function createTrip($duration, $name, $registrationLimit, $registrationNumber, $startedAt, $status, ObjectManager $manager)
+    {
 
         $trip = new Trip();
         $trip->setDuration($duration);
@@ -47,7 +51,8 @@ class TripFixtures extends Fixture
         $trip->setStartedAt($startedAt);
         $trip->setPromoter($this->campusRepository->findOneBy([]));
         $trip->setPromoterContributor($this->contributorRepository->findOneBy([]));
-        $trip->setStatus($this->statusRepository->findOneBy(["label"=>$status]));
+        $trip->setStatus($this->statusRepository->findOneBy(["label" => $status]));
+        $trip->setLocation($this->locationRepository->findOneBy([]));
         $manager->persist($trip);
         return $trip;
     }
