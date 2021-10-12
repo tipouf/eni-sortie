@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container" xmlns="http://www.w3.org/1999/html">
-        <div class=" card light-blue darken-4">
+        <div class=" card  grey lighten-5">
             <br class="row container">
             <table class="table container">
                 <tbody>
@@ -17,24 +17,24 @@
                 </tr>
                 <tr>
                     <th>Durée de l'activité</th>
-                    <td class="white-text">{{ trip.duration }}</td>
+                    <td>{{ trip.duration }}</td>
                 </tr>
                 <tr>
                     <th>Limite d'inscription</th>
-                    <td class="white-text">{{ trip.registrationLimit ? trip.registrationLimit|date('d/m/Y à H:i') : '' }}</td>
+                    <td>{{ trip.registrationLimit ? trip.registrationLimit|date('d/m/Y à H:i') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Nombre de participants inscrits</th>
-                    <td class="white-text">{{ trip.contributors|length }} / {{ trip.registrationNumber }}</td>
+                    <td>{{ trip.contributors|length }} / {{ trip.registrationNumber }}</td>
                 </tr>
                 <tr>
                     <th>Description</th>
-                    <td class="white-text">{{ trip.description }}</td>
+                    <td>{{ trip.description }}</td>
                     </br>
                 <tr>
                     {% if trip.contributors is empty %}
                         <th>participants</th>
-                        <td class="white-text">Pas encore de participants inscrit!</td>
+                        <td>Pas encore de participants inscrit!</td>
                     {% else %}
                         <br class="row container">
                         <table class="table container responsive-table light-blue darken-1">
