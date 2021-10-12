@@ -40,10 +40,7 @@ class EditContributorType extends AbstractType
           'Utilisateur' => 'ROLE_USER',
           'Administrateur' => 'ROLE_ADMIN',
         ],
-        'multiple' => true,
-        'expanded' => true,
-        'label' => 'Rôles',
-        'data'=> [0],
+        'mapped' => false,
       ])
       ->add('password', RepeatedType::class, [
         'type' => PasswordType::class,

@@ -75,6 +75,26 @@ class Trip
      */
     private $contributors;
 
+
+    /** @var ?City */
+    private $city;
+
+    /**
+     * @return City|null
+     */
+    public function getCity(): ?City
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param City|null $city
+     */
+    public function setCity(?City $city): void
+    {
+        $this->city = $city;
+    }
+
     public function __construct()
     {
         $this->contributors = new ArrayCollection();
