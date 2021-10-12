@@ -14,6 +14,10 @@ use Doctrine\Persistence\ObjectManager;
 
 class TripFixtures extends Fixture
 {
+    private CampusRepository $campusRepository;
+    private ContributorRepository $contributorRepository;
+    private StatusRepository $statusRepository;
+
     public function __construct(CampusRepository $campusRepository, ContributorRepository  $contributorRepository, StatusRepository $statusRepository)
     {
         $this->campusRepository=$campusRepository;

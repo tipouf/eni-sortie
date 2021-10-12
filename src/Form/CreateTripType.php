@@ -28,19 +28,6 @@ class CreateTripType extends AbstractType
     {
         //$cityId = $builder->getData()->
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $form = $event->getForm();
-                $data = $event->getData();
-
-                if ($data->getCity() === null) {
-                    return;
-                }
-                dd("test");
-                $form->add('zobi', TextType::class, [
-                    'mapped' => false,
-                    'empty_data' => 'Default value'
-                ]);
-            })
             ->add('name', TextType::class, [
                 'label' => 'Nom de la sortie',
             ])
