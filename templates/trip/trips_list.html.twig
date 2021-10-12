@@ -2,8 +2,8 @@
 {% block body %}
 
     <div class="container">
-        <div class="card">
-        <div class="card-content row" >
+    <div class="card">
+        <div class="card-content row">
             {{ form_start(form) }}
             <div class="col s6">
                 {{ form_row(form.campus) }}
@@ -27,7 +27,7 @@
             </label>
             <div class="col s6">
                 {{ form_row(form.nameSearch) }}
-            </div >
+            </div>
 
             <div class="col s6">
                 {{ form_widget(form.dateStartedAt) }}
@@ -59,20 +59,35 @@
                             <tr>
                                 <td>{{ trip.name }}</td>
                                 <td>{{ trip.startedAt|date('d/m/Y H:i') }}</td>
-                                <td>{{ trip.registrationLimit|date('d/m/Y H:i')}}</td>
-                                <td>{{ trip.contributors|length }} / {{ trip.registrationNumber}}</td>
-                                <td>{{ trip.status.label}}</td>
-                                <td></td>
+                                <td>{{ trip.registrationLimit|date('d/m/Y H:i') }}</td>
+                                <td>{{ trip.contributors|length }} / {{ trip.registrationNumber }}</td>
+                                <td>{{ trip.status.label }}</td>
+                                {% if app.user in trip.contributors %}
+                                    <td>X</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
                                 <td> {% if trip.promoterContributor is not null %}
                                     {{ trip.promoterContributor.firstname }} {{ trip.promoterContributor.lastname }}</td>
-                                    {% endif %}
+                                {% endif %}
                                 <td>
-                                    <a class="btn-small" href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">add</i></a>
+                                    {% if app.user in trip.contributors %}
+                                        <a class="btn-small"
+                                           href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
+                                                    class="material-icons">remove</i></a>
+                                    {% else %}
+                                        <a class="btn-small"
+                                           href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
+                                                    class="material-icons">add</i></a>
+                                    {% endif %}
                                     {% if trip.promoterContributor == app.user %}
                                         <a class="btn-small"><i class="material-icons">edit</i></a>
-                                        <a class="btn-small" href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">cancel</i></a>
+                                        <a class="btn-small"
+                                           href=""><i
+                                                    class="material-icons">cancel</i></a>
                                     {% endif %}
-                                    <a class="btn-small" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i class="material-icons">zoom_in</i></a>
+                                    <a class="btn-small" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i
+                                                class="material-icons">zoom_in</i></a>
                                 </td>
                             </tr>
                         {% endfor %}
