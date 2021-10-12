@@ -20,10 +20,10 @@ class UsersFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         // $contributor = $this->createContributor();
-        $this->createContributor("Kevin","Huet","kevin.huet2020campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
-        $this->createContributor("Antoine","Quatrevaux","antoine.quatrevaux2020campus-eni.fr","07607070707","ROLE_ADMIN",$manager);
-        $this->createContributor("Nicolas","Cindon","nicolas.cindon2020campus-eni.fr","0706070707","ROLE_ADMIN",$manager);
-        $this->createContributor("Jean","Jean","jean.jean2020campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Kevin","Huet","kevin.huet2020@campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Antoine","Quatrevaux","antoine.quatrevaux2020@campus-eni.fr","07607070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Nicolas","Cindon","nicolas.cindon2020@campus-eni.fr","0706070707","ROLE_ADMIN",$manager);
+        $this->createContributor("Jean","Jean","jean.jean2020@campus-eni.fr","0707070707","ROLE_ADMIN",$manager);
         $manager->flush();
 
     }

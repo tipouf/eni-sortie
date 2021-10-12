@@ -12,7 +12,7 @@
                     <th>
                         <h1>Activité: {{ trip.name }}</h1>
                     <th>Commence le: {{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}
-                        <h3>Lieu: {{ trip.location.name }}</h3>
+                        {%if trip.location is not null%}<h3>Lieu: {{ trip.location.name }}</h3> {%endif%}
                     </th>
                 </tr>
                 <tr>
