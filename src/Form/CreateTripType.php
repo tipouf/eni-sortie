@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateTripType extends AbstractType
@@ -26,6 +28,19 @@ class CreateTripType extends AbstractType
     {
         //$cityId = $builder->getData()->
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+
+                if ($data->getCity() === null) {
+                    return;
+                }
+                dd("test");
+                $form->add('zobi', TextType::class, [
+                    'mapped' => false,
+                    'empty_data' => 'Default value'
+                ]);
+            })
             ->add('name', TextType::class, [
                 'label' => 'Nom de la sortie',
             ])
@@ -93,6 +108,7 @@ class CreateTripType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
+
         ;
     }
 
