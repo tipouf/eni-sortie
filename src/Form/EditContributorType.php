@@ -38,7 +38,7 @@ class EditContributorType extends AbstractType
         'label' => 'Nom',
         'constraints' => [
           new NotBlank([
-            'message' => 'le prénom est manquant',
+            'message' => 'le nom est manquant',
           ])
         ],])
       ->add('phone', null, ['label' => 'Téléphone'])

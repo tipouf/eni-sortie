@@ -52,23 +52,29 @@ class ProfileController extends AbstractController
   /**
    * @Route("/new", name="contributor_new", methods={"GET", "POST"})
    */
-  public function new(Request $request ): Response
+  public function new(Request $request): Response
   {
     $contributor = new Contributor();
     $form = $this->createForm(EditContributorType::class, $contributor);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
-      $role = $form->get('roles')->getData();
-      $contributor->setRoles([$role]);
-      $contributor->setPassword($hash);
+      $email = $form->get('email')->getData();
+      $uniqEmail = $this->contributorService->getContributorByEmail($email);
+      if ($uniqEmail) {
+        $this->addFlash("error","cet email appartient déjà à un compte existant!");
+      } else {
+        $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
+        $role = $form->get('roles')->getData();
+        $contributor->setRoles([$role]);
+        $contributor->setPassword($hash);
 
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->persist($contributor);
-      $entityManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($contributor);
+        $entityManager->flush();
 
-      return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_home');
+      }
     }
 
     return $this->renderForm('profile/new.html.twig', [
