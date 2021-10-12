@@ -57,7 +57,7 @@ class ContributorService
         $this->em->flush();
     }
 
-    public function uploadFile(UploadedFile $file, Contributor $user, $uploadPath)
+    public function uploadFile(UploadedFile $file = null, Contributor $user, $uploadPath)
     {
         if ($file) {
             $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);

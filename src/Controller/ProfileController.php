@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/profil")
+ * @Route("/profile")
  */
 class ProfileController extends AbstractController
 {
@@ -32,7 +32,7 @@ class ProfileController extends AbstractController
 
 
     /**
-     * @Route("/{contributor}", name="contributor_profil", methods={"GET", "POST"})
+     * @Route("/user/{contributor}", name="contributor_profile", methods={"GET", "POST"})
      */
     public function show(Request $request, Contributor $contributor): Response
     {
@@ -49,8 +49,34 @@ class ProfileController extends AbstractController
         ]);
     }
 
+  /**
+   * @Route("/new", name="contributor_new", methods={"GET", "POST"})
+   */
+  public function new(Request $request ): Response
+  {
+    $contributor = new Contributor();
+    $form = $this->createForm(EditContributorType::class, $contributor);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
+      $contributor->setPassword($hash);
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($contributor);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('app_home');
+    }
+
+    return $this->renderForm('profile/new.html.twig', [
+      'contributor' => $contributor,
+      'form' => $form,
+    ]);
+  }
+
     /**
-     * @Route("/{contributor}/edit", name="contributor_edit", methods={"GET", "POST"})
+     * @Route("/edit/{contributor}", name="contributor_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Contributor $contributor): Response
     {
@@ -62,7 +88,7 @@ class ProfileController extends AbstractController
             $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
             $contributor->setPassword($hash);
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('contributor_profil', [
+            return $this->redirectToRoute('contributor_profile', [
                 'contributor' => $contributor->getId(),
             ]);
         }

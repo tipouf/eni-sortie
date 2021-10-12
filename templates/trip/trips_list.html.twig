@@ -63,7 +63,9 @@
                                 <td>{{ trip.contributors|length }} / {{ trip.registrationNumber}}</td>
                                 <td>{{ trip.status.label}}</td>
                                 <td></td>
-                                <td>{{ trip.promoterContributor.firstName }} {{ trip.promoterContributor.LastName }}</td>
+                                <td> {% if trip.promoterContributor is not null %}
+                                    {{ trip.promoterContributor.firstname }} {{ trip.promoterContributor.lastname }}</td>
+                                    {% endif %}
                                 <td>
                                     <a class="btn-small" href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i class="material-icons">add</i></a>
                                     {% if trip.promoterContributor == app.user %}

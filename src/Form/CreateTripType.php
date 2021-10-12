@@ -30,7 +30,7 @@ class CreateTripType extends AbstractType
                 'label' => 'Nom de la sortie',
             ])
             ->add('startedAt', DateTimeType::class, [
-                'attr' => ['class'=> ''],
+                'attr' => ['class'=> '', 'type' => 'datetime'],
                 'required' => false,
                 'widget' => 'single_text'
             ])

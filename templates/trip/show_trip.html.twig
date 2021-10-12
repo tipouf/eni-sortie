@@ -6,54 +6,64 @@
     <div class="container" xmlns="http://www.w3.org/1999/html">
         <div class=" card light-blue darken-4">
             <br class="row container">
-                <table class="table container ">
-                    <tbody>
-                    <tr>
-                        <th>
+            <table class="table container">
+                <tbody>
+                <tr>
+                    <th>
                         <h1>Activité: {{ trip.name }}</h1>
-                        <th>Commence le: {{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}
-                            <h3>Lieu: {{ trip.location.name }}</h3>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Durée de l'activité</th>
-                        <td class="white-text">{{ trip.duration }}</td>
-                    </tr>
-                    <tr>
-                        <th>Limite d'inscription</th>
-                        <td class="white-text">{{ trip.registrationLimit ? trip.registrationLimit|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre de participants inscrits</th>
-                        <td class="white-text">{{ trip.contributors|length }} / {{ trip.registrationNumber }}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td class="white-text">{{ trip.description }}</td>
-                    </tr>
-                    <tr>
-                        {% if trip.contributors is empty %}
-                            <th>participants</th>
-                            <td class="white-text">Pas encore de participants inscrit!</td>
-                        {% else %}
-                            <table class="white-text">
-                                <tbody>
-                                <tr>
-                                    <th>participants</th>
-                                    {% for contributor in trip.contributors %}
-                                        <td class="white-text">{{ contributor.firstname }} {{ contributor.lastname }}</td>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        {% endif %}
-                    </tr>
-                    </tbody>
+                    <th>Commence le: {{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}
+                        <h3>Lieu: {{ trip.location.name }}</h3>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Durée de l'activité</th>
+                    <td class="white-text">{{ trip.duration }}</td>
+                </tr>
+                <tr>
+                    <th>Limite d'inscription</th>
+                    <td class="white-text">{{ trip.registrationLimit ? trip.registrationLimit|date('d/m/Y à H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre de participants inscrits</th>
+                    <td class="white-text">{{ trip.contributors|length }} / {{ trip.registrationNumber }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td class="white-text">{{ trip.description }}</td>
+                    </br>
+                <tr>
+                    {% if trip.contributors is empty %}
+                        <th>participants</th>
+                        <td class="white-text">Pas encore de participants inscrit!</td>
+                    {% else %}
+                        <br class="row container">
+                        <table class="table container responsive-table light-blue darken-1">
+                            <tbody>
+                            <tr>
+                                <th>participants</th>
+                                <td>PSEUDO</td>
+                                <td>Nom du participant</td>
+                            </tr>
 
-                </table>
-                <div style="padding: 20px">
-                    <a class="btn" href="{{ path('app_showTrips') }}">Retour à la liste</a>
-                </div>
+                            {% for contributor in trip.contributors %}
+                                <tr>
+                                    <td></td>
+                                    <td class="white-text">{{ contributor.pseudo }}</td>
+                                    <td class="white-text">{{ contributor.firstname }} {{ contributor.lastname }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </tr>
+                </tbody>
+
+            </table>
+            <div style="padding: 20px">
+                <a class="btn" href="{{ path('app_showTrips') }}">Retour à la liste</a>
             </div>
         </div>
     </div>
+    </div>
 {% endblock %}
+
