@@ -13,6 +13,7 @@
                         <img src="{{ asset('img/no-profile.jpg') }}" width="200px" height="200px" alt="user-picture">
                     {% endif %}
                 </div>
+                {% if contributor.id == app.user.id %}
                 <div class="col s6">
                     {{ form_start(formImage) }}
                     <div class="file-field input-field">
@@ -27,6 +28,7 @@
                     <button class="btn-small">Changer d'image</button>
                     {{ form_end(formImage) }}
                 </div>
+                {% endif %}
                 <h4 class="col s12 white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
                 <table class="table">
                     <tbody>
@@ -62,9 +64,10 @@
                 </table>
 
                 <a class="btn" href="{{ path('app_home') }}">Retour à la page d'accueil</a>
-
+                {% if contributor.id == app.user.id %}
                 <a class="btn" href="{{ path('contributor_edit', {'contributor': contributor.id}) }}">Editer le
                     profil</a>
+                {% endif %}
 
             </div>
         </div>
