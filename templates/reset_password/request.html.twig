@@ -4,13 +4,13 @@
 
 {% block body %}
     <div class="container row align">
-        <div class=" card light-blue darken-4 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
+        <div class=" card col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
             <card class="card-content">
                 {% for flashError in app.flashes('reset_password_error') %}
                     <div class="alert alert-danger" role="alert">{{ flashError }}</div>
                 {% endfor %}
                 <div class="container">
-                    <h1 class="white-text">Réinitialiser le mot de passe.</h1>
+                    <h1 class="">Réinitialiser le mot de passe.</h1>
 
                     {{ form_start(requestForm) }}
                     {{ form_row(requestForm.email) }}

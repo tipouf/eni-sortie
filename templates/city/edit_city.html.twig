@@ -4,10 +4,10 @@
 
 {% block body %}
     <div class="container row align">
-        <div class=" card light-blue darken-4 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
+        <div class=" card  grey lighten-5 col s12 m8 offset-m2 l6 offset-l3" style="padding: 1em 0 3em 0">
             <card class="card-content">
                 <div class="col m8 offset-m2">
-                    <h1 class="white-text">Edition</h1>
+                    <h1>Edition</h1>
                     {{ include('city/_form.html.twig', {'button_label': 'Mise à jour'}) }}
                     <a class="btn" href="{{ path('main_cities') }}">Retour à la liste des villes</a>
                 </div>
