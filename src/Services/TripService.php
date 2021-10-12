@@ -68,7 +68,9 @@ class TripService
 
     public function getAllTrips(): array
     {
-        return $this->tripRepository->findAll();
+        $results = $this->tripRepository->findTrips();
+        $this->checkIfIsExpiredOrFull($results);
+        return $results;
     }
 
     public function getTripsByStatus(Status $status): array

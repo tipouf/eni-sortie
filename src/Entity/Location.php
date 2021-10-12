@@ -41,13 +41,13 @@ class Location
 
     /**
      * @ORM\OneToMany(targetEntity=Trip::class, mappedBy="location")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $trips;
 
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="locations")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $city;
 
