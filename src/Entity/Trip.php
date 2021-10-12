@@ -61,7 +61,7 @@ class Trip
 
     /**
      * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="trips")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $location;
 
