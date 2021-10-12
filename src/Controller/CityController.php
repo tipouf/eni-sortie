@@ -55,14 +55,12 @@ class CityController extends AbstractController
   /**
    * @Route("/delete/{city}", name="delete_city", methods={"GET","POST"})
    */
-  public function deleteCity(Request $request, City $city):Response
+  public function deleteCity(City $city):Response
   {
-    if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
+     $city->getId();
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($city);
       $entityManager->flush();
-    }
-
     return $this->redirectToRoute('main_cities', [], Response::HTTP_SEE_OTHER);
   }
 
