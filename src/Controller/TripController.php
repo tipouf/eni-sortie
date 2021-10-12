@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Trip;
+use App\Form\CancelTripType;
 use App\Form\CreateTripType;
 use App\Form\FilterType;
 use App\Model\FilterModel;
@@ -84,10 +85,20 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/cancel", name="app_cancelTrip")
+     * @Route("/{trip}/cancel", name="app_cancelTrip")
      */
-    public function cancelTrip()
+    public function cancelTrip(Trip $trip, Request $request)
     {
+        $form = $this->createForm(CancelTripType::class, $trip);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+        }
+        return $this->render('trip/cancel_trip.html.twig', [
+            'form' => $form->createView(),
+            'trip' => $trip
+        ]);
+
     }
 
     /**
