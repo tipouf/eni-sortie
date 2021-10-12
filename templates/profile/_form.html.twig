@@ -30,9 +30,9 @@
             <span>Activé</span>
         </label>
     </div>
-    <label> {{ form_widget(form.roles) }} </label>
+    <div class="col m6"> {{ form_row(form.roles) }} </div>
 </div>
-<div class="col s12">
+<div class="col s12 m12">
     <button class="btn" type="submit">{{ button_label|default('Enregistrer') }}</button>
 </div>
 {{ form_end(form) }}
