@@ -60,6 +60,8 @@ class ProfileController extends AbstractController
 
     if ($form->isSubmitted() && $form->isValid()) {
       $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
+      $role = $form->get('roles')->getData();
+      $contributor->setRoles([$role]);
       $contributor->setPassword($hash);
 
       $entityManager = $this->getDoctrine()->getManager();
