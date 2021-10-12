@@ -4,6 +4,11 @@
     <div class="container">
     <div class="card">
         <div class="card-content row">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div style="margin-bottom: 2em" class="col s12">
+                    <a class="btn" href="{{ path('app_addTrip') }}">Ajouter une sortie</a>
+                </div>
+            {% endif %}
             {{ form_start(form) }}
             <div class="col s6">
                 {{ form_row(form.campus) }}

@@ -1,13 +1,13 @@
 
 <nav class="light-blue darken-4">
     <div class="nav-wrapper container">
-        <a href="{{ path('app_showTrips') }}" class="brand-logo">  <img src="img/logo/logo-header.png" width="auto" height="68px"></a>
+        <a href="{{ path('app_home') }}" class="brand-logo">  <img class="responsive-img" style="max-height: 48px" src="{{ asset('img/logo/logo-header.png') }}"></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
+            <li><a href="{{ path('app_showTrips') }}">Sorties</a></li>
             <li><a href="{{ path('main_cities') }}">Villes</a></li>
-            <li><a href="">Campus</a></li>
             <li><a href="{{ path('contributor_profile', {'contributor': app.user.id }) }}">Mon profil</a></li>
-            <li><a href="{{ path('contributor_new') }}">Créer utilisateur</a></li>
+            {% if is_granted('ROLE_ADMIN')  %}<li><a href="{{ path('contributor_new') }}">Créer utilisateur</a></li> {% endif %}
             <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
         </ul>
     </div>
@@ -15,6 +15,7 @@
 
 <ul class="sidenav blue-grey darken-4" id="mobile-demo">
     <li><a href="">Accueil</a></li>
+    <li><a href="{{ path('app_showTrips') }}">Sorties</a></li>
     <li><a href="{{ path('main_cities') }}">Villes</a></li>
     <li><a href="">Campus</a></li>
     <li><a href="{{ path('contributor_profile', {'contributor': app.user.id }) }}">Mon profil</a></li>

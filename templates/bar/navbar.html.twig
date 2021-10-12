@@ -1,16 +1,18 @@
 <nav class="light-blue darken-4">
     <div class="nav-wrapper container">
-        <a href="{{ path('app_home') }}" class="brand-logo">  <img src="img/logo/logo-header.png" width="auto" height="68px"></a>
+        <a href="{{ path('app_home') }}" class="brand-logo">  <img class="responsive-img" style="max-height: 48px" src="{{ asset('img/logo/logo-header.png') }}"></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="{{ path('app_login') }}">Connexion</a></li>
-
+            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li><a href="{{ path('app_showTrips') }}">Sorties</a></li>
+            <li><a href="{{ path('app_login') }}"><i class="material-icons right">person_add</i>Connexion</a></li>
         </ul>
     </div>
 </nav>
 
 <ul class="sidenav blue-grey darken-4" id="mobile-demo">
-    <li><a href="{{ path('app_home') }}">Acceuil</a></li>
+    <li><a href="{{ path('app_home') }}">Accueil</a></li>
     <li><a href="{{ path('app_login') }}">Connexion</a></li>
+    <li><a href="{{ path('app_showTrips') }}">Sorties</a></li>
 
 </ul>
