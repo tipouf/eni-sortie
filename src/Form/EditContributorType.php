@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 
 class EditContributorType extends AbstractType
@@ -26,8 +27,20 @@ class EditContributorType extends AbstractType
     $builder
       ->add('pseudo')
       ->add('email')
-      ->add('firstname', null, ['label' => 'Prénom'])
-      ->add('lastname', null, ['label' => 'Nom'])
+      ->add('firstname', null, [
+        'label' => 'Prénom',
+        'constraints' => [
+          new NotBlank([
+            'message' => 'le prénom est manquant',
+          ])
+        ],])
+      ->add('lastname', null, [
+        'label' => 'Nom',
+        'constraints' => [
+          new NotBlank([
+            'message' => 'le prénom est manquant',
+          ])
+        ],])
       ->add('phone', null, ['label' => 'Téléphone'])
       ->add('enable', CheckboxType::class, [
         "attr" => [
@@ -50,6 +63,9 @@ class EditContributorType extends AbstractType
         'first_options' => ['label' => 'mot de passe'],
         'second_options' => ['label' => 'confirmation du mot de passe'],
         'constraints' => [
+          new NotBlank([
+            'message' => 'mot de passe manquant',
+          ]),
           new Length([
             'min' => 6,
             'minMessage' => 'Votre mot de passe doit contenir au minimum 6 caractères',
