@@ -1,40 +1,54 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    <div class="container row align"  style="padding: 1em 0 3em 0">
-        <div class="col m4">
-        <table class="responsive-table" >
-            <tbody>
-            <tr>
-                <th>Nom de la sortie</th>
-                <td>{{ trip.name}}</td>
-            </tr>
-            <tr>
-                <th>Date de la sortie</th>
-                <td>{{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Campus</th>
-                <td>{{ trip.promoter.name }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ trip.location.name }}</td>
-            </tr>
-            </tbody>
+    <div class="container"  style="padding: 1em 0 3em 0">
+        <div class="card">
+            <div class="card-content row" >
+                <div class="col m5">
+                    <table class="responsive-table" >
+                        <tbody>
+                        <tr>
+                            <th>Nom de la sortie</th>
+                            <td>{{ trip.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Date de la sortie</th>
+                            <td>{{ trip.startedAt ? trip.startedAt|date('d/m/Y à H:i') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Campus</th>
+                            <td>{{ trip.promoter.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            {%if trip.location is not null%} <td>{{ trip.location.name }}</td>{%endif%}
+                        </tr>
+                        </tbody>
 
-        </table>
+                    </table>
+                </div>
+                <div class="container">
+                    {{ form_start(form) }}
+                    <div class="col m7"
+                        {{ form_row(form.motif) }}
+                    </div>
+                    <div class="col m7">
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    <button class = "btn" type="submit">
+                        Enregistrer
+                    </button>
+                    <a href="" class = "btn">
+                        Annuler
+                    </a>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    <div class="container row">
-        {{ form_start(form) }}
-        {{ form_row(form.motif) }}
-        <button class = "btn" type="submit">
-            Enregistrer
-        </button>
-        <a href="" class = "btn">
-            Annuler
-        </a>
-        {{ form_end(form) }}
-    </div>
+
 {% endblock %}
