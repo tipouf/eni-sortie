@@ -29,7 +29,7 @@
                     {{ form_end(formImage) }}
                 </div>
                 {% endif %}
-                <h4 class="col s12 white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
+                <h4 class="col s12 ">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
                 <table class="table">
                     <tbody>
                     <tr>
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                         <th>Campus</th>
-                        <td>{{ contributor.phone ? 'campus affiché' : 'Pas de campus trouvé' }}</td>
+                        <td>{{ contributor.campus.name ?  contributor.campus.name : 'Pas de campus' }}</td>
                     </tr>
                     <tr>
                         <th>Activé</th>
