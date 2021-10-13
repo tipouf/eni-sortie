@@ -29,7 +29,7 @@
                     {{ form_end(formImage) }}
                 </div>
                 {% endif %}
-                <h4 class="col s12 white-text">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
+                <h4 class="col s12 ">Profil de {{ contributor.firstname }} {{ contributor.lastname }}</h4>
                 <table class="table">
                     <tbody>
                     <tr>
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                         <th>Campus</th>
-                        <td>{{ contributor.phone ? 'campus affiché' : 'Pas de campus trouvé' }}</td>
+                        <td>{{ contributor.campus ?  contributor.campus.name : 'Pas de campus' }}</td>
                     </tr>
                     <tr>
                         <th>Activé</th>
@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
 
-                <a class="btn" href="{{ path('app_home') }}">Retour à la page d'accueil</a>
+                <a class="btn" href="{{ path('app_showTrips') }}">Retour</a>
                 {% if contributor.id == app.user.id %}
                 <a class="btn" href="{{ path('contributor_edit', {'contributor': contributor.id}) }}">Editer le
                     profil</a>

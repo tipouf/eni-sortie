@@ -61,7 +61,8 @@ class TripController extends AbstractController
             $newLocation = $form->get('locationType')->getData();
             $city = $form->get('city')->getData();
             $this->tripService->createTrip($model, $city, $newLocation);
-            return $this->redirectToRoute('app_home');
+            $this->tripService->subscribeTrip($model, $this->getUser());
+          return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()

@@ -18,36 +18,36 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProfileController extends AbstractController
 {
-    private UserPasswordHasherInterface $hasher;
-    private ContributorService $contributorService;
+  private UserPasswordHasherInterface $hasher;
+  private ContributorService $contributorService;
 
-    /**
-     * ProfileController constructor.
-     */
-    public function __construct(UserPasswordHasherInterface $hasher, ContributorService $contributorService)
-    {
-        $this->hasher = $hasher;
-        $this->contributorService = $contributorService;
+  /**
+   * ProfileController constructor.
+   */
+  public function __construct(UserPasswordHasherInterface $hasher, ContributorService $contributorService)
+  {
+    $this->hasher = $hasher;
+    $this->contributorService = $contributorService;
+  }
+
+
+  /**
+   * @Route("/user/{contributor}", name="contributor_profile", methods={"GET", "POST"})
+   */
+  public function show(Request $request, Contributor $contributor): Response
+  {
+    $form = $this->createForm(FileUploadType::class, $contributor);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+      /** @var UploadedFile $file */
+      $file = $form->get('profilePicture')->getData();
+      $this->contributorService->uploadFile($file, $contributor, $this->getParameter('upload_directory'));
     }
-
-
-    /**
-     * @Route("/user/{contributor}", name="contributor_profile", methods={"GET", "POST"})
-     */
-    public function show(Request $request, Contributor $contributor): Response
-    {
-        $form = $this->createForm(FileUploadType::class, $contributor);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $file */
-            $file = $form->get('profilePicture')->getData();
-            $this->contributorService->uploadFile($file, $contributor, $this->getParameter('upload_directory'));
-        }
-        return $this->render('profile/profile.html.twig', [
-            'contributor' => $contributor,
-            'formImage' => $form->createView()
-        ]);
-    }
+    return $this->render('profile/profile.html.twig', [
+      'contributor' => $contributor,
+      'formImage' => $form->createView()
+    ]);
+  }
 
   /**
    * @Route("/new", name="contributor_new", methods={"GET", "POST"})
@@ -62,7 +62,7 @@ class ProfileController extends AbstractController
       $email = $form->get('email')->getData();
       $uniqEmail = $this->contributorService->getContributorByEmail($email);
       if ($uniqEmail) {
-        $this->addFlash("error","cet email appartient déjà à un compte existant!");
+        $this->addFlash("error", "cet email appartient déjà à un compte existant!");
       } else {
         $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
         $role = $form->get('roles')->getData();
@@ -83,28 +83,32 @@ class ProfileController extends AbstractController
     ]);
   }
 
-    /**
-     * @Route("/edit/{contributor}", name="contributor_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Contributor $contributor): Response
-    {
-        $form = $this->createForm(EditContributorType::class, $contributor);
-        $form->handleRequest($request);
-        //$form = $this->createForm(FileUploadType::class);
-        if ($form->isSubmitted() && $form->isValid()) {
+  /**
+   * @Route("/edit/{contributor}", name="contributor_edit", methods={"GET", "POST"})
+   */
+  public function edit(Request $request, Contributor $contributor): Response
+  {
+    $form = $this->createForm(EditContributorType::class, $contributor);
+    $form->handleRequest($request);
+    //$form = $this->createForm(FileUploadType::class);
+    if ($form->isSubmitted() && $form->isValid()) {
 
-            $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
-            $contributor->setPassword($hash);
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('contributor_profile', [
-                'contributor' => $contributor->getId(),
-            ]);
-        }
-
-        return $this->renderForm('profile/edit.html.twig', [
-            'contributor' => $contributor,
-            'form' => $form,
-        ]);
+      $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
+      $contributor->setPassword($hash);
+      $this->getDoctrine()->getManager()->flush();
+      return $this->redirectToRoute('contributor_profile', [
+        'contributor' => $contributor->getId(),
+      ]);
     }
+
+    if ($this->getUser() == $contributor) {
+      return $this->renderForm('profile/edit.html.twig', [
+        'contributor' => $contributor,
+        'form' => $form,
+      ]);
+    } else {
+      return $this->redirectToRoute('app_home');
+    }
+  }
 
 }
