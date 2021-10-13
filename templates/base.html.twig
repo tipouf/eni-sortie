@@ -6,27 +6,16 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="/css/base.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}ENI-Sortie{% endblock %}</title>
 
         {% block stylesheets %}
         {% endblock %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- polyfiller file to detect and load polyfills -->
-        <script src="{{ asset('js/polyfiller.js') }}"></script>
-        <script>
-            webshims.setOptions('forms-ext', {
-                types: 'datetime-local'
-            });
-            webshims.polyfill('forms forms-ext');
-        </script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('select').formSelect()
-                $('.sidenav').sidenav()
-            })
-        </script>
+
+        <script src="{{ asset('js/polyfiller.js') }}"></script>
+        <script src="{{ asset('js/init.js') }}"></script>
+
 
         {% block javascripts %}
         {% endblock %}

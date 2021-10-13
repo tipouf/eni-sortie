@@ -97,4 +97,15 @@ class TripRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findTrips()
+    {
+        return $this->createQueryBuilder('f')
+            ->select('s', 'f')
+            ->join('f.status', 's')
+            ->andWhere('s.label != :status')
+            ->setParameter('status', Status::PASSED)
+            ->getQuery()
+            ->getResult();
+    }
 }

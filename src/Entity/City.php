@@ -31,6 +31,7 @@ class City
 
     /**
      * @ORM\OneToMany(targetEntity=Location::class, mappedBy="city", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $locations;
 
