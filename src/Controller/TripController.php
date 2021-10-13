@@ -61,7 +61,8 @@ class TripController extends AbstractController
             $newLocation = $form->get('locationType')->getData();
             $city = $form->get('city')->getData();
             $this->tripService->createTrip($model, $city, $newLocation);
-            return $this->redirectToRoute('app_home');
+            $this->tripService->subscribeTrip($model, $this->getUser());
+          return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()
@@ -94,6 +95,9 @@ class TripController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripService->changeStatus($trip,Status::CANCELED);
+            $this->addFlash("success", "La sortie à été annulée");
+            $this->addFlash("error", "Modification non effectué");
+            return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/cancel_trip.html.twig', [
             'form' => $form->createView(),
@@ -126,10 +130,14 @@ class TripController extends AbstractController
    */
   public function subscribeTrip(Trip $trip): Response
   {
-    $contributor = $this->getUser();
-    $this->tripService->subscribeTrip($trip, $contributor);
-    $this->addFlash("success", "Vous êtes à présent inscrit!");
-    return $this->redirectToRoute('app_showTrips');
+      if ($trip->getRegistrationNumber() == $trip->getContributors()->count() ){
+          $this->addFlash("error", "Impossible de s'inscrire");
+          return $this->redirectToRoute('app_showTrips');
+      }
+      $contributor = $this->getUser();
+      $this->tripService->subscribeTrip($trip, $contributor);
+      $this->addFlash("success", "Vous êtes à présent inscrit!");
+      return $this->redirectToRoute('app_showTrips');
   }
 
   /**

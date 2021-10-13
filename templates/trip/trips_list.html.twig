@@ -77,21 +77,23 @@
                                     {{ trip.promoterContributor.firstname }} {{ trip.promoterContributor.lastname }}</td>
                                 {% endif %}
                                 <td>
-                                    {% if app.user %}
-                                        {% if app.user in trip.contributors %}
-                                            <a class="btn-small tooltipped" data-tooltip="Se désinscrire"
-                                               href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
-                                                        class="material-icons">remove</i></a>
-                                        {% else %}
-                                            <a class="btn-small tooltipped" data-tooltip="S'inscrire"
-                                               href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
-                                                        class="material-icons">add</i></a>
+                                    {% if trip.status.label != "Annulée" and trip.status.label != "Cloturée"%}
+                                        {% if app.user %}
+                                            {% if app.user in trip.contributors %}
+                                                <a class="btn-small"
+                                                   href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
+                                                            class="material-icons">remove</i></a>
+                                            {% else %}
+                                                <a class="btn-small"
+                                                   href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
+                                                            class="material-icons">add</i></a>
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     {% if trip.promoterContributor == app.user %}
-                                        <a class="btn-small tooltipped" data-tooltip="Editer la sortie"><i class="material-icons">edit</i></a>
-                                        <a class="btn-small tooltipped" data-tooltip="Annulée la sortie"
-                                           href=""><i
+                                        <a class="btn-small tooltipped" data-tooltip="Editer la sortie" href="{{ path('app_editTrip', {'trip': trip.id}) }}"><i class="material-icons">edit</i></a>
+                                        <a class="btn-small tooltipped" data-tooltip="Annuler la sortie"
+                                           href="{{ path('app_cancelTrip', {'trip': trip.id}) }}"><i
                                                     class="material-icons">cancel</i></a>
                                     {% endif %}
                                     <a data-tooltip="Plus d'info" class="btn-small tooltipped" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i
