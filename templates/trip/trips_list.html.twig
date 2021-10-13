@@ -77,15 +77,17 @@
                                     {{ trip.promoterContributor.firstname }} {{ trip.promoterContributor.lastname }}</td>
                                 {% endif %}
                                 <td>
-                                    {% if app.user %}
-                                        {% if app.user in trip.contributors %}
-                                            <a class="btn-small"
-                                               href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
-                                                        class="material-icons">remove</i></a>
-                                        {% else %}
-                                            <a class="btn-small"
-                                               href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
-                                                        class="material-icons">add</i></a>
+                                    {% if trip.status.label != "Annulée" and trip.status.label != "Cloturée"%}
+                                        {% if app.user %}
+                                            {% if app.user in trip.contributors %}
+                                                <a class="btn-small"
+                                                   href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
+                                                            class="material-icons">remove</i></a>
+                                            {% else %}
+                                                <a class="btn-small"
+                                                   href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
+                                                            class="material-icons">add</i></a>
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     {% if trip.promoterContributor == app.user %}
