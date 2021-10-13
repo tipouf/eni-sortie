@@ -16,7 +16,9 @@
                     {{ form_row(form.startedAt, { attr: { value: trip.startedAt|date('d/m/Y') } }) }}
                 </div>
                 <div class="col m6">
-                    {{ form_row(form.city, { attr: { value: trip.location.city.name } }) }}
+                    {% if trip.location.city is not null %}
+                        {{ form_row(form.city, { attr: { value: trip.location.city.name } }) }}
+                    {% endif %}
                 </div>
 
                 <div class="col m6">
