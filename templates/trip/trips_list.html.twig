@@ -79,22 +79,22 @@
                                 <td>
                                     {% if app.user %}
                                         {% if app.user in trip.contributors %}
-                                            <a class="btn-small"
+                                            <a class="btn-small tooltipped" data-tooltip="Se désinscrire"
                                                href="{{ path('app_unsubscribeTrip', {'trip': trip.id}) }}"><i
                                                         class="material-icons">remove</i></a>
                                         {% else %}
-                                            <a class="btn-small"
+                                            <a class="btn-small tooltipped" data-tooltip="S'inscrire"
                                                href="{{ path('app_subscribeTrip', {'trip': trip.id}) }}"><i
                                                         class="material-icons">add</i></a>
                                         {% endif %}
                                     {% endif %}
                                     {% if trip.promoterContributor == app.user %}
-                                        <a class="btn-small"><i class="material-icons">edit</i></a>
-                                        <a class="btn-small"
+                                        <a class="btn-small tooltipped" data-tooltip="Editer la sortie"><i class="material-icons">edit</i></a>
+                                        <a class="btn-small tooltipped" data-tooltip="Annulée la sortie"
                                            href=""><i
                                                     class="material-icons">cancel</i></a>
                                     {% endif %}
-                                    <a class="btn-small" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i
+                                    <a data-tooltip="Plus d'info" class="btn-small tooltipped" href="{{ path('app_showTrip', {'trip': trip.id}) }}"><i
                                                 class="material-icons">zoom_in</i></a>
                                 </td>
                             </tr>
