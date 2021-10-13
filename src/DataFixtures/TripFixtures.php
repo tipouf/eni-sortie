@@ -36,6 +36,17 @@ class TripFixtures extends Fixture
         $this->createTrip(60, "2eme Sortie", new DateTime('2021-01-03'), 10, new DateTime('2021-01-04'), Status::OPEN, $manager);
         $this->createTrip(50, "Accrobranche", new DateTime('2021-04-05'), 10, new DateTime('2021-04-05'), Status::CREATED, $manager);
         $this->createTrip(50, "Piscine", new DateTime('2021-06-07'), 10, new DateTime('2021-06-08'), Status::CREATED, $manager);
+        $this->createTrip(50, "Randonnée", new DateTime('2021-10-01'), 10, new DateTime('2021-10-02'), Status::CREATED, $manager);
+        $this->createTrip(60, "Vélo", new DateTime('2021-10-03'), 10, new DateTime('2021-10-04'), Status::OPEN, $manager);
+        $this->createTrip(50, "Plage", new DateTime('2021-09-05'), 10, new DateTime('2021-09-06'), Status::CREATED, $manager);
+        $this->createTrip(50, "Escalade", new DateTime('2021-11-07'), 10, new DateTime('2021-11-08'), Status::CREATED, $manager);
+        $this->createTrip(50, "Kayak", new DateTime('2021-09-12'), 10, new DateTime('2021-09-13'), Status::CREATED, $manager);
+        $this->createTrip(60, "4eme Sortie", new DateTime('2021-09-17'), 10, new DateTime('2021-09-18'), Status::OPEN, $manager);
+        $this->createTrip(50, "Accrobranche", new DateTime('2021-09-05'), 10, new DateTime('2021-09-06'), Status::CREATED, $manager);
+        $this->createTrip(50, "Piscine", new DateTime('2021-10-10'), 10, new DateTime('2021-10-11'), Status::CREATED, $manager);
+        $this->createTrip(60, "5eme Sortie", new DateTime('2021-10-03'), 10, new DateTime('2021-10-04'), Status::OPEN, $manager);
+        $this->createTrip(50, "6eme sortie", new DateTime('2021-10-05'), 10, new DateTime('2021-10-06'), Status::CREATED, $manager);
+        $this->createTrip(50, "Une sortie incroyable", new DateTime('2021-10-07'), 10, new DateTime('2021-10-08'), Status::CREATED, $manager);
         $manager->flush();
 
     }
