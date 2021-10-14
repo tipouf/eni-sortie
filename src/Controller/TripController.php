@@ -131,7 +131,7 @@ class TripController extends AbstractController
    */
   public function subscribeTrip(Trip $trip): Response
   {
-      if ($trip->getRegistrationNumber() == $trip->getContributors()->count() ){
+      if ($trip->getRegistrationNumber() == $trip->getContributors()->count() && $trip->getStatus()->getLabel() != Status::OPEN){
           $this->addFlash("error", "Impossible de s'inscrire");
           return $this->redirectToRoute('app_showTrips');
       }
