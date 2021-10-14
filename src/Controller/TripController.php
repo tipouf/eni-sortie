@@ -57,12 +57,15 @@ class TripController extends AbstractController
         $form = $this->createForm(CreateTripType::class, $model);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //
             $newLocation = $form->get('locationType')->getData();
             $city = $form->get('city')->getData();
-            $this->tripService->createTrip($model, $city, $newLocation);
-            $this->tripService->subscribeTrip($model, $this->getUser());
-          return $this->redirectToRoute('app_showTrips');
+            if (!$model->getRegistrationLimit() || !$model->getStartedAt()) {
+                $this->addFlash('error', "Un des champs est vide.");
+            } else {
+                $this->tripService->createTrip($model, $city, $newLocation);
+                $this->tripService->subscribeTrip($model, $this->getUser());
+                return $this->redirectToRoute('app_showTrips');
+            }
         }
         return $this->render('trip/new_trip.html.twig', [
             'form' => $form->createView()

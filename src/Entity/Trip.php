@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TripRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -118,12 +119,12 @@ class Trip
         return $this;
     }
 
-    public function getStartedAt(): ?\DateTimeInterface
+    public function getStartedAt(): ?DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function setStartedAt(\DateTimeInterface $startedAt): self
+    public function setStartedAt(?DateTimeInterface $startedAt): self
     {
         $this->startedAt = $startedAt;
 
@@ -142,12 +143,12 @@ class Trip
         return $this;
     }
 
-    public function getRegistrationLimit(): ?\DateTimeInterface
+    public function getRegistrationLimit(): ?DateTimeInterface
     {
         return $this->registrationLimit;
     }
 
-    public function setRegistrationLimit(\DateTimeInterface $registrationLimit): self
+    public function setRegistrationLimit(?DateTimeInterface $registrationLimit): self
     {
         $this->registrationLimit = $registrationLimit;
 

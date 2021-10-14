@@ -18,10 +18,10 @@
             $(document).ready(function() {
                 M.AutoInit()
                 {% for message in app.flashes('success') %}
-                    M.toast({html: "{{ message }}" })
+                    M.toast({html: "{{ message }}", classes: 'green darken-1' })
                 {% endfor %}
                 {% for message in app.flashes('error') %}
-                    M.toast({html: "{{ message }}" })
+                    M.toast({html: "{{ message }}", classes: 'red darken-2' })
                 {% endfor %}
             })
         </script>
