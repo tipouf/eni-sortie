@@ -72,7 +72,7 @@ class ProfileController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($contributor);
         $entityManager->flush();
-
+        $this->addFlash("success", "Utilisateur créé");
         return $this->redirectToRoute('app_home');
       }
     }
@@ -96,6 +96,7 @@ class ProfileController extends AbstractController
       $hash = $this->hasher->hashPassword($contributor, $form->get('password')->getData());
       $contributor->setPassword($hash);
       $this->getDoctrine()->getManager()->flush();
+      $this->addFlash("success", "Profil mis à jour");
       return $this->redirectToRoute('contributor_profile', [
         'contributor' => $contributor->getId(),
       ]);

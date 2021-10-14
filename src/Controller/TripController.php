@@ -96,7 +96,6 @@ class TripController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tripService->changeStatus($trip,Status::CANCELED);
             $this->addFlash("success", "La sortie à été annulée");
-            $this->addFlash("error", "Modification non effectué");
             return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/cancel_trip.html.twig', [
@@ -118,6 +117,8 @@ class TripController extends AbstractController
             $newLocation = $form->get('locationType')->getData();
             $city = $form->get('city')->getData();
             $this->tripService->createTrip($trip, $city, $newLocation);
+          $this->addFlash("success", "Modification effectuée");
+          return $this->redirectToRoute('app_showTrips');
         }
         return $this->render('trip/edit_trip.html.twig', [
             'form' => $form->createView(),
