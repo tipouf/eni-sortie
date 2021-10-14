@@ -77,7 +77,7 @@
                                     {{ trip.promoterContributor.firstname }} {{ trip.promoterContributor.lastname }}</td>
                                 {% endif %}
                                 <td>
-                                    {% if trip.status.label != "Annulée" and trip.status.label != "Cloturée"%}
+                                    {% if trip.status.label != "Annulée" and trip.status.label != "Clôturée"%}
                                         {% if app.user %}
                                             {% if app.user in trip.contributors %}
                                                 <a class="btn-small tooltipped" data-tooltip="Se désinscrire"
