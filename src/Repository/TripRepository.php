@@ -26,7 +26,9 @@ class TripRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('f')
             ->select('s', 'f')
-            ->join('f.status', 's');
+            ->join('f.status', 's')
+            ->leftJoin('f.promoterContributor', 'o')->addSelect('o')
+            ->leftJoin('f.contributors', 'c')->addSelect('c');
 
         if ($filter->isOrganizedByMe() && $user) {
             $qb = $qb
@@ -103,6 +105,8 @@ class TripRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('f')
             ->select('s', 'f')
             ->join('f.status', 's')
+            ->leftJoin('f.promoterContributor', 'o')->addSelect('o')
+            ->leftJoin('f.contributors', 'c')->addSelect('c')
             ->andWhere('s.label != :status')
             ->setParameter('status', Status::PASSED)
             ->getQuery()

@@ -114,12 +114,12 @@ class TripService
     private function checkIfIsExpiredOrFull(array &$trips) {
         /** @var Trip $trip */
         foreach ($trips as $trip) {
-            if ($trip->getStatus()->getLabel() == Status::CANCELED || $trip->getStatus()->getLabel() == Status::PASSED)
-                return;
-            if ($trip->getStatus()->getLabel() != Status::PASSED && $trip->getStartedAt() > $trip->getStartedAt()->add(new DateInterval('P1M'))) {
+
+            if ($trip->getStatus()->getLabel() != Status::CANCELED && $trip->getStatus()->getLabel() != Status::PASSED && $trip->getStartedAt() > $trip->getStartedAt()->add(new DateInterval('P1M'))) {
                 $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::PASSED]));
                 $this->em->persist($trip);
-            } else if ($trip->getRegistrationLimit() < new \DateTime('now') || $trip->getRegistrationNumber() == $trip->getContributors()->count()) {
+            } else if ($trip->getStatus()->getLabel() != Status::CANCELED &&$trip->getStatus()->getLabel() != Status::CLOSED && $trip->getRegistrationLimit() < new \DateTime('now')
+                || $trip->getStatus()->getLabel() != Status::CANCELED && $trip->getStatus()->getLabel() != Status::CLOSED && $trip->getRegistrationNumber() == $trip->getContributors()->count()) {
                 $trip->setStatus($this->statusRepository->findOneBy(['label' => Status::CLOSED]));
                 $this->em->persist($trip);
             }
